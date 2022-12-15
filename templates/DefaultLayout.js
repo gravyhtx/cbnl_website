@@ -10,7 +10,7 @@ import Footer from '../components/nav/Footer';
 import SideNav from '../components/nav/SideNav';
 import { HomepageHero } from '../components/dynamic/Hero';
 
-import { HomeHeader, BrandHeader } from '../components/nav/Header';
+import { HomeHeader, BrandHeader, MobileHeader } from '../components/nav/Header';
 import BrandOverlay from '../components/dynamic/BrandOverlay';
 
 import { SvgContainer } from '../components/containers/SvgContainer';
@@ -101,6 +101,7 @@ export default function DefaultLayout({
     }
     return (
       <hgroup className={styles.header}>
+        <MobileHeader />
         { isHome === true ? <HomeHero /> : <></> }
         { useHeader && isHome === true ? <HomeHeader /> : useHeader && isHome === false ? <BrandHeader /> : <></>}
         { hero && isHome === false ? hero : <></> }

@@ -13,16 +13,27 @@ import styles from './styles/Header.module.css';
 import navStyles from './styles/navHeader.module.css';
 
 import logo from '../../public/logo-dark.png';
+import mobileLogo from '../../public/logo-light.png';
 
 const Logo = () => {
+  const logoAlt = "Site Logo"
   return (
     <Image src={logo}
       className={styles.logo}
-      width={logo.width}
-      height={logo.height}
       alt={logoAlt}
       sizes="100vw"
-      placeholder="blur" />
+      fill />
+  )
+}
+
+const MobileLogo = () => {
+  const logoAlt = "Site Logo"
+  return (
+    <Image src={mobileLogo}
+      className={styles.mobileLogo}
+      alt={logoAlt}
+      sizes="100vw"
+      fill />
   )
 }
 
@@ -163,5 +174,15 @@ export const StandardHeader = ({ useHeaderImage, notification }) => {
         { notification }
       </div>
     </header>
+  )
+}
+
+export const MobileHeader = () => {
+  return (
+    <div className={styles.mobileHeader}>
+      <div className={styles.container}>
+        <MobileLogo />
+      </div>
+    </div>
   )
 }
