@@ -84,4 +84,7 @@
   .homepageHero {
     height: 33.33vh;
   }
+  .logoContainer {
+    display: none;
+  }
 }

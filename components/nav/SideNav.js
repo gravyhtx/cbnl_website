@@ -15,7 +15,7 @@ const SideNav = ({ position, header, activate, setActivate, blur }) => {
 
   // Set styles for dynamic navigation container
   let navStyles = {
-    width: screenWidth > 500 ? '380px' : screenWidth,
+    width: screenWidth > 576 ? '380px' : screenWidth,
   }
 
   const close = () => {
@@ -39,6 +39,16 @@ const SideNav = ({ position, header, activate, setActivate, blur }) => {
     headr: styles.header
   }
 
+  const Close = () => {
+    return (<>
+      <div className={styles.close}>
+        <div className={styles.container} onClick={() => close()}>
+          &times;
+        </div>
+      </div>
+    </>)
+  }
+
   return (<>
     { activate ? 
       <aside className={cls.aside}>
@@ -51,6 +61,7 @@ const SideNav = ({ position, header, activate, setActivate, blur }) => {
               <NavLinks location="side" />
             </div>
           </div>
+          <Close />
         </nav>
       </aside> : <></> }
   </>)
