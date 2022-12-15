@@ -1,0 +1,17 @@
+.wrapper {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.item {
+  margin: 0 auto;
+}

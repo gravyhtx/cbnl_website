@@ -1,0 +1,38 @@
+.container {
+  position: relative;
+  height: 80vh;
+  padding: 0 60px;
+}
+
+.container h2 {
+  font-size: 5rem;
+  font-weight: 700;
+  padding: 50px 20px;
+  margin: 0 auto;
+}
+
+.container .imgContainer {
+}
+
+.container .imgContainer img {
+  position: relative !important;
+  width: 100vw !important;
+  object-fit: contain;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .container {
+    height: 600px;
+    padding: 0 20px;
+  }
+  .container h2 {
+    font-size: 4rem;
+    padding: 50px 20px 0px;
+  }
+}

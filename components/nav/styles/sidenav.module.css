@@ -1,0 +1,69 @@
+/* SIDE NAV */
+@keyframes sideNavSlideFromLeft {
+  from { left: -50% }
+  to { left: 0 }
+}
+@keyframes sideNavSlideFromRight {
+  from { right: 50% }
+  to { right: 0 }
+}
+
+.sidenav {
+  position: fixed;
+  z-index: 899;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidenav .outer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.sidenav .wrapper {
+  position: relative;
+  height: 100vh;
+  z-index: 999;
+  overflow-y: auto;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background-color: #fff;
+}
+
+.sidenav .wrapper .left {
+  animation: sideNavSlideFromLeft 500ms linear forwards;
+}
+
+.sidenav .wrapper .left {
+  animation: sideNavSlideFromRight 500ms linear forwards;
+}
+
+.sidenav .wrapper .container {
+  padding: 20px 0;
+}
+
+.menu {
+  margin-top: 80px;
+}
+
+.headernav .menu {
+  margin-top: 0px;
+}
+
+.header {
+  padding: 50px;
+}
+
+@media only screen and (max-width: 480px) {
+  .menu ul a {
+    padding-bottom: 10px;
+  }
+
+  .wrapper {
+    text-align: center;
+  }
+}

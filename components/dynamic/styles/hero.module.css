@@ -1,0 +1,87 @@
+@keyframes heroAnimate {
+  0% {
+    transform: scale(100%);
+  }
+  100% {
+    transform: scale(105%);
+  }
+}
+
+@keyframes heroFadeOut {
+  0% {
+    opacity: 100%;
+    filter: blur(0px);
+    transform: scale(105%);
+  }
+  100% {
+    opacity: 0%;
+    filter: blur(20px);
+    transform: scale(100%);
+  }
+}
+
+@keyframes heroFadeIn {
+  0% {
+    opacity: 0%;
+    filter: blur(20px);
+    transform: scale(100%);
+  }
+  5% {
+    opacity: 100%;
+    filter: blur(0px);
+  }
+  100% {
+    transform: scale(105%);
+  }
+}
+
+@keyframes logoFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.homepageHero {
+  position: sticky;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--light-green);
+}
+
+.homepageHero .in {
+  animation: heroFadeIn 25s both ease-in-out;
+}
+
+.homepageHero .out {
+  animation: heroFadeOut 2s both ease-in-out;
+}
+
+.homepageHero .container {
+  position: absolute;
+}
+
+.slide {
+  object-fit: cover;
+  /* animation: heroAnimate 25s both ease-in-out; */
+  max-height: 100vh;
+}
+
+.logoContainer {
+  position: absolute;
+  z-index: 999;
+  padding: 20px 25px;
+  animation: logoFadeIn 2s forwards linear;
+}
+
+.logo {
+  max-width: 33.33vw;
+  height: 100%;
+  filter: drop-shadow(2px 2px 0px white);
+  opacity: .925;
+}
+
+@media only screen and (max-width: 576px) {
+  .homepageHero {
+    height: 33.33vh;
+  }
+}

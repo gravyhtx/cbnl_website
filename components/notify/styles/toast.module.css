@@ -1,0 +1,55 @@
+@keyframes fade-in {
+  from { opacity: 0 }
+}
+
+@keyframes fade-out {
+  to { opacity: 0 }
+}
+
+@keyframes slide-in {
+  from { transform: translateY(var(--_travel-distance, 10px)) }
+}
+
+.toast-container {
+  contain: content;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.toast {
+  contain: content;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px;
+  background-color: #272727;
+  color: #fff;
+  transform: translate(0, 100%);
+  transition: transform 125ms ease-in-out;
+}
+
+.toast.show {
+  transform: translate(0, 0);
+}
+
+/* .toast {
+  --_duration: 3s;
+  --_travel-distance: 0;
+
+  will-change: transform;
+  animation: 
+    fade-in .3s ease,
+    slide-in .3s ease,
+    fade-out .3s ease var(--_duration);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    --_travel-distance: 5vh;
+  }
+} */

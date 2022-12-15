@@ -1,0 +1,50 @@
+/* ANIMATIONS */
+
+@keyframes overlay-focus {
+  0%   { transform: scale(0.5); filter: blur(20px); opacity: 0; }
+  /* 60%  { filter: blur(15px) drop-shadow(0 0 10px #25352810); } */
+  80%  { opacity: 1;}
+  90%  { filter: blur(0px); }
+  100% { transform: scale(1); filter:drop-shadow(0 0 5px #25352805); }
+}
+@keyframes overlay-out {
+  0%   { opacity: 1; filter: blur(0) drop-shadow(0 0 0) brightness(1); }
+  90%  { opacity: 1; filter: blur(0); }
+  100% { opacity: 0; filter: blur(50px) drop-shadow(0 0 0) brightness(0); }
+}
+
+/* CLASSES */
+.brandOverlay {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  animation-delay: 10.5s;
+  animation: overlay-out 6s linear forwards;
+}
+
+.overlayWrapper {
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  background: var(--light-green);
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  margin: 0 auto;
+  animation-delay: .5s;
+  animation: overlay-focus 5s ease-in-out 0s forwards;
+}
+
+.logo {
+  z-index: 999;
+  opacity: .925;
+  max-width: 80%;
+  object-fit: contain;
+  filter: drop-shadow(2px 2px 0px white);
+}

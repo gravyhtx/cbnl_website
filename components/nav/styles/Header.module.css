@@ -1,0 +1,19 @@
+.notificationBar {
+  font-size: 1rem;
+  text-align: center;
+  color: var(--green-5);
+  background-color: var(--green-1);
+  padding: 5px 2px;
+  border-top: 2px solid var(--theme-green);
+  border-bottom: 2px solid var(--theme-green);
+}
+
+@media only screen and (max-width: 768px) {
+  .navHome,
+  .notificationBar {
+    display: none;
+  }
+  .header {
+  border-bottom: 8px solid var(--green-3);
+  }
+}

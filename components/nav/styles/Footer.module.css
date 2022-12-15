@@ -1,0 +1,113 @@
+.footer {
+  border-top: 4px solid var(--green-3);
+  background-color: var(--green-4);
+  text-align: center;
+  margin: 0 auto;
+  color: white;
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100%;
+  margin: 0 auto;
+  padding: 30px 10px;
+}
+
+.wrapper h2 {
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.wrapper .container {
+  padding: 25px;
+  height: 100%;
+}
+
+.about {
+  text-align: justify;
+}
+
+.contact {
+  margin: 0 auto;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.contactItem .icon {
+  margin-right: 10px;
+}
+
+.contactItem div a {
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactItem div {
+  text-align: center;
+}
+
+.socials {
+  margin: 0 auto;
+  padding: 40px 10px 0;
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+
+.socials .icon {
+  width: 50px;
+}
+
+.socials .icon svg {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.info {
+  border-top: 4px solid var(--green-3);
+  padding: 20px 10px 10px;
+  color: white;
+  background-color: var(--dark-green);
+}
+
+.info .copyright {
+  font-weight: 800;
+  text-shadow: 2px 2px 1px var(--green-5);
+  /* font-style: italic; */
+}
+
+.info .designer {
+  font-size: .75rem;
+  font-weight: 800;
+  filter: blur(8px);
+  color: var(--green-5);
+  cursor: help;
+  transition: 2s all;
+}
+
+.info .designer:hover {
+  filter: blur(0);
+  color: var(--light-green);
+  transition: 2s all;
+}
+
+.info .designer a {
+  cursor: help;
+}
+
+.info .designer a:hover {
+  cursor: help;
+}

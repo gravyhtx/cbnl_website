@@ -1,0 +1,19 @@
+.wrapper {
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.container  {
+  padding: 20px;
+}
+
+.container.no-padding  {
+  padding: 0;
+}
+
+.container.border {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
