@@ -2,9 +2,6 @@
 //*==<([ MODAL CONTAINER ])>==*//
 //*===========================*//
 
-import { useId } from "react";
-
-
 //  This is a pop-up modal with an outer shell to darken the background and serve as a clickable element to
 //  close the modal (instead of using a click event on the document behind it). This is so that 'useState' and
 //  'useEffect' aren't needed at all while being able to destroy itself when closed instead of using 'display:
@@ -95,7 +92,7 @@ titleClasses = titleClasses ? ' '+titleClasses : '';
 
 // Modal settings
 const settings = {
-  id: id ? '-'+id : useId(),
+  id: id ? '-'+id : null,
   outerClasses: "modal-outer darken-content"+blur+active,
   outerStyle: {},
   wrapStyle: {},
