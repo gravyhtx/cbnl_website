@@ -1,0 +1,290 @@
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ABOUT */
+
+.about {
+  margin: 0 auto;
+  max-width: 85vw;
+  padding: 80px 0;
+}
+
+.about hgroup {
+  margin-bottom: 40px;
+}
+
+.about hgroup h1 {
+  line-height: 1;
+  margin: 0 auto -40px;
+  color: var(--green-5);
+  font-weight: 700;
+}
+
+.about hgroup h2 {
+  line-height: 1;
+  color: var(--green-6)
+}
+
+.about .content div {
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+/* SERVICES */
+.services {
+  background-color: var(--green-5);
+  border-top: 6px solid var(--green-3);
+  border-bottom: 6px solid var(--green-3);
+  color: white;
+  font-weight: 700;
+  margin: 0;
+  padding: 40px 10px;
+}
+
+.services .flexWrapper {
+  min-height: 230px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.services .flexWrapper .container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.services h2 {
+  margin: 10px 0 25px;
+  color: #fff;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+/* .services h1 span {
+  border-bottom: 5px solid white;
+} */
+
+.services .container ul {
+  margin: 0;
+  padding: 0;
+}
+
+.services .container .icon {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border: 10px solid white;
+  border-radius: 50%;
+  padding: 14px;
+}
+.services .container .name {
+  font-size: 1.3rem;
+  margin-top: 20px;
+  color: var(--green-1);
+}
+
+/* PROJECTS */
+
+.projects {
+  color: #333;
+  padding: 80px 60px;
+}
+
+.projects h2.header {
+  margin: 25px 0 0;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.projects .details .content {
+  padding: 30px 0;
+  text-align: justify;
+}
+
+/* CALL US */
+
+.callUs {
+  margin: 0 auto;
+  padding: 30px 10px;
+  background-color: var(--green-1);
+}
+
+.callUs h2 {
+  margin: 0;
+  font-size: 6rem;
+  font-weight: 800;
+  color: var(--green-4);
+  text-shadow: 2px 2px 0px white;
+}
+.callUs .tel {
+  font-size: 6.5rem;
+  font-weight: 800;
+  color: #453c32;
+  text-shadow: 2px 2px 0px white;
+}
+
+/* OUR NURSERY */
+.nursery {
+  background-color: var(--green-4);
+  color: white;
+  padding: 80px 60px;
+}
+
+.nursery h2.header {
+  margin: 0;
+  padding-bottom: 40px;
+  color: #fff;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
+.nursery .details {
+  text-align: justify;
+}
+
+.nursery .content {
+  padding-bottom: 30px;
+}
+
+/* GALLERY */
+.gallery {
+  position: relative;
+  height: 80vh;
+  padding: 0 60px;
+}
+
+.gallery h2 {
+  font-size: 5rem;
+  font-weight: 700;
+  padding: 20px 0;
+}
+
+.gallery .imgContainer {
+}
+
+.gallery .imgContainer img {
+  position: relative !important;
+  width: 100vw !important;
+  min-height: 400px;
+  object-fit: contain;
+}
+
+/* VERIFIED */
+.verified {
+  border-top: 4px solid var(--green-3);
+  background-color: var(--green-6);
+  padding: 50px 10px 60px;
+  color: white;
+}
+
+.verified .logoContainer {
+  height: 150px;
+  margin: 0 0px 50px 10px;
+  position: relative;
+}
+
+.verified .logoContainer .logo {
+  object-fit: contain;
+  filter: brightness(200%);
+}
+
+.verified .icons {
+  margin: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.verified .icons .name {
+  font-size: 2rem;
+}
+
+@media only screen and (min-width: 1400px) {
+  .verified {
+    padding: 90px 10px 100px;
+  }
+  .verified .logoContainer {
+    height: 250px;
+    margin: 0 0px 50px 10px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .verified {
+    padding: 90px 10px 100px;
+  }
+  .verified .logoContainer {
+    height: 200px;
+    margin: 0 0px 50px 10px;
+  }
+}
+
+@media only screen and (max-width: 862px) {
+  .services h2 {
+    margin: 20px auto 50px;
+  }
+  .services .container ul {
+    padding-bottom: 50px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .projects {
+    padding: 60px 0;
+  }
+  .nursery {
+    padding: 60px 30px;
+  }
+  .projects .details .content {
+    padding: 30px;
+  }
+  .gallery {
+    padding: 0 10px;
+  }
+  .callUs h2 {
+    font-size: 5rem;
+  }
+  .callUs .tel {
+    font-size: 4rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .callUs h2 {
+    font-size: 4rem;
+    padding-bottom: 10px;
+  }
+  .callUs .tel {
+    font-size: 3rem;
+  }
+  .verified {
+    padding: 35px 10px 40px;
+  }
+  .verified .logoContainer {
+    height: 80px;
+    margin-bottom: 30px;
+  }
+  .verified .icons .name {
+    font-size: 1.2rem;
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  /* .logo img {
+    filter: invert(1);
+  } */
+}
