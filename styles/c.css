@@ -1,0 +1,200 @@
+/*
+//////////////////////////
+// ROOT STYLE VARIABLES //
+//////////////////////////
+*/
+
+:root {
+  
+  /* GLOBAL VARIABLES */
+    --bold-weight: 800;
+    --light-weight: 300;
+    --xt-light-weight: 100;
+    --transparent: #00000000;
+    --no-outline: 0px solid var(--transparent);
+    --transparent-outline: 0px solid var(--transparent);
+
+
+  /* THEME FONTS */
+    --theme-font: "Mukta", "Segoe", Helvetica, sans-serif;
+    --theme-font-weight: 400;
+    --theme-font-slab: "Roboto Slab", "Cambria", serif;
+    --theme-font-serif: "Crimson Pro", "Baskerville", serif;
+    --theme-font-serif-alt: "Lora", "Baskerville", serif;
+    --theme-font-sans: "Urbanist", Helvetica, sans-serif;
+    --theme-font-sans-alt: "Noto Sans", Helvetica, sans-serif;
+    --theme-font-monospace: "Red Hat Mono", "Menlo", "Monaco", "Lucida Console", "Liberation Mono",
+              "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  
+
+  /* THEME FONT SIZES */
+    --theme-font-size:      1.2rem;
+    --theme-font-size-xxs:  0.67rem;
+    --theme-font-size-xs:   0.75rem;
+    --theme-font-size-sm:   0.925rem;
+    --theme-font-size-md:   1.5rem;
+    --theme-font-size-lg:   2.25rem;
+    --theme-font-size-xl:   2.8rem;
+    --theme-font-size-xxl:  3.5rem;
+    --theme-font-size-xxxl: 4.2rem;
+    --theme-font-size-yuge: 6.0rem;
+  /*
+    THEME COLORS
+      SVG colors generated from CSS Filter Generator
+      by Barrett Sonntag
+      "https://codepen.io/sosuke/pen/Pjoqqp"
+  
+      Based on article by MultiplyByZer0
+      "https://stackoverflow.com/a/43960991/604861"
+  
+      ** Note: SVG must be imported with black fill (#000000) **
+        "If your icon set isn't black you can prepend "brightness(0) saturate(100%)" to your filter property which will first turn the icon set to black."
+  */
+    --theme-bg-color: #ebede8;
+    --theme-light-color: #ebede8;
+    --theme-dark-color: #202822;
+    --theme-font-color: #202822; /* DARK GREEN */
+    --theme-font-color-alt: #28231c; /* DARK BROWN */
+
+    --theme-link-color: #5b8278;
+    --theme-link-color-alt: #567583;
+
+    --theme-green: #4e8259;
+    --theme-green-alt: #628268;
+    --theme-light-green: #c0ceb2;
+    --theme-dark-green: #253528;
+
+    --green-1: #e4e6d9;
+    --green-2: #c0ceb2;
+    --green-3: #8ba888;
+    --green-4: #49654e;
+    --green-5: #253528;
+
+    --bluegreen: #567583;
+    --light-bluegreen: #9bcec1;
+    --greenblue: #5b8278;
+
+    --brown: #836d55;
+    --light-brown: #cfb69b;
+    --dark-brown: #362a1d;
+
+    --violet: #5d4883;
+    --violet-alt: #4f5782;
+    --light-violet: #7582c0;
+    --dark-violet: #2f2b36;
+  
+    --white-1: #eeeeee;
+    --white-2: #d8d8d8;
+
+    --svg-invert-color: invert(1);
+  
+  /* HEADER COLORS */
+    /* --header-color: #cad8e7;
+    --header-alt-color: #a7b0bb;
+    --notify-color: #b4b4b4;
+    --notify-hover-color: white;
+    --notify-font-size: var(--theme-font-size-sm);
+    --notify-bkg: #1e2122;
+    --notify-border: 1px solid var(--border-alt-color); */
+  
+  /* BORDERS */
+    /* --border-color: var(--theme-primary-light-color);
+    --border-alt-color: #b4b4b4; */
+  
+  /* BUTTONS */
+    --button-main-light: #4e8259;
+    --button-main-dark: #253528;
+  
+    --button-bg-alt: #836d55;
+    --button-txt-alt: #ebede8;
+  
+    --button-bg-special: #2f2b36;
+    --button-txt-special: #cfb69b;
+  
+    /* --button-bg-focus: #2e3235;
+  
+    --button-color-disabled: #3f3f3f;
+    --button-bg-disabled: #787878; */
+  
+  
+  
+  /* CONTAINERS */
+    --text-container-light: #e4e6d9;
+    --text-container-light_content: #628269;
+    --text-container-light-alt: #cfb69b;
+    --text-container-light-alt_content: #362a1d;
+    
+    --text-container-green: #628269;
+    --text-container-green_content: #e4e6d9;
+    --text-container-blue: #567583;
+    --text-container-blue_content: #ebede8;
+    --text-container-brown: #362c20;
+    --text-container-brown_content: #cfb69b;
+  
+  /* GRADIENTS */
+    --theme-gradient: rgb(28, 36, 39) linear-gradient(330deg, rgb(25, 34, 36) 0%, rgb(33, 35, 36) 35%, rgb(39, 42, 43) 100%);
+    --dark-gradient: rgb(28, 33, 36) linear-gradient(330deg, rgb(20, 23, 26) 0%, rgb(22, 27, 29) 35%, rgb(24, 24, 24) 100%);
+    --darker-gradient: rgb(21, 22, 22) linear-gradient(330deg, rgb(19, 20, 20) 0%, rgb(24, 25, 26) 35%, rgb(15, 15, 15) 100%);
+  
+  /* GRAVY STYLES */
+    --gravy-font: 'Poppins', Helvetica, sans-serif;
+    --important: #D24B4B;
+    --important-highlight: #e57d7d;
+    --important-darken: #873535;
+    --dark-gravy: #64483b;
+    --light-gravy: #d6c8b4;
+    --mintberry-crunch: #80ecc3;
+    --blue-glow: #7FCCE4;
+  
+  /* CSS ANIMATION SETTINGS */
+    --animate-duration: 2500ms;
+    --animate-delay: 1.2s;
+  
+}
+  
+
+/*
+/////////////////
+// DOM STYLES  //
+/////////////////
+*/
+
+html,
+body {
+  color: var(--theme-font-color);
+  background-color: var(--theme-bg-color);
+  padding: 0;
+  margin: 0;
+  font-family: var(--theme-font-sans), -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: ease 500ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main-content {
+  min-height: 100vh;
+  padding: 2rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  /* html {
+    color-scheme: dark;
+  } */
+  /* body {
+    color: white;
+    background: black;
+  } */
+}

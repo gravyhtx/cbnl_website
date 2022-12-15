@@ -1,0 +1,353 @@
+/* custom styling overriding glider.js styles */
+
+.glider-prev,
+.glider-next {
+  width: 51px;
+  top: 37%;
+}
+
+.glider-prev {
+  left: -42px;
+}
+
+.glider-next {
+  right: -45px;
+}
+
+.glider {
+  height: 50vh;
+}
+
+.glider-contain {
+  margin-bottom: 25px;
+}
+
+.glider-dots {
+  margin-top: 15px;
+}
+
+.glider-track {
+  height: 100%;
+  scrollbar-width: none;
+}
+
+.glider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.glider-container {
+  border: 3px solid white;
+  /* border-image: linear-gradient(to right, #8cc9f0, #efa8b0, #a89cc8) 5; */
+  /* box-shadow: 0 0 3px 1px rgb(247 186 233 / 50%); */
+  margin: 1em 0;
+}
+
+.glider-shadow {
+  box-shadow: 5px 5px 15px black;
+}
+
+.slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}
+
+.slide span.glow {
+  
+  text-shadow: 0 0 5px #FFFFFF;
+}
+
+.slide span {
+  cursor: pointer;
+}
+
+.slide > div.stylize {
+  background: #8cc9f0;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  display: block;
+}
+
+.slide:nth-child(2n) > div.stylize {
+  background: #a89cc8;
+}
+
+.slide:nth-child(3n) > div.stylize {
+  background: #efa8b0;
+}
+
+.custom-arrow {
+  border: 0;
+  background: none;
+  padding: 1em;
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+}
+
+.custom-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-arrow.disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+.custom-track {
+  padding: 12px;
+  gap: 24px;
+  background-color: #4a4a5a;
+}
+
+
+/* glider.js styles */
+
+.glider,
+.glider-contain {
+  margin: 0 auto;
+  position: relative;
+}
+
+.glider,
+.glider-track {
+  transform: translateZ(0);
+}
+
+.glider-dot,
+.glider-next,
+.glider-prev {
+  border: 0;
+  padding: 0;
+  user-select: none;
+  outline: 0;
+}
+
+.glider-contain {
+  width: 100%;
+}
+
+.glider {
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+
+.glider-track {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  z-index: 1;
+}
+
+.glider.draggable {
+  user-select: none;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.glider.draggable .glider-slide img {
+  user-select: none;
+  pointer-events: none;
+}
+
+.glider.drag {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+.glider-slide {
+  user-select: none;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
+.glider-slide img {
+  max-width: 100%;
+}
+
+.glider::-webkit-scrollbar {
+  opacity: 0;
+  height: 0;
+}
+
+.glider-next,
+.glider-prev {
+  position: absolute;
+  background: 0 0;
+  z-index: 2;
+  font-size: 40px;
+  text-decoration: none;
+  /* left: -23px; */
+  /* top: 30%; */
+  cursor: pointer;
+  color: #666;
+  opacity: 1;
+  line-height: 1;
+  transition: opacity 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67),
+    color 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.glider-next:focus,
+.glider-next:hover,
+.glider-prev:focus,
+.glider-prev:hover {
+  color: #ccc;
+}
+
+/* .glider-next {
+  right: -23px;
+  left: auto;
+} */
+
+.glider-next.disabled,
+.glider-prev.disabled {
+  opacity: 0.25;
+  color: #666;
+  cursor: default;
+}
+
+.glider-hide {
+  opacity: 0;
+}
+
+.glider-dots {
+  user-select: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.glider-dot {
+  display: block;
+  cursor: pointer;
+  color: #ccc;
+  border-radius: 999px;
+  background: #ccc;
+  width: 12px;
+  height: 12px;
+  margin: 7px;
+}
+
+.glider-dot:focus,
+.glider-dot:hover {
+  background: #ddd;
+}
+
+.glider-dot.active {
+  background: #a89cc8;
+}
+
+@media (max-width: 36em) {
+  .glider::-webkit-scrollbar {
+    opacity: 1;
+    -webkit-appearance: none;
+    width: 7px;
+    height: 3px;
+  }
+
+  .glider::-webkit-scrollbar-thumb {
+    opacity: 1;
+    border-radius: 99px;
+    background-color: rgba(156, 156, 156, 0.25);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.25);
+  }
+}
+
+
+/* styles for perspective */
+
+
+.glider-perspective .glider-track {
+  position: relative;
+  align-items: center;
+}
+
+.glider-perspective .slide-outer {
+  padding: 0 10px;
+}
+
+.slide-outer > span {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  background: white;
+  border: 1px solid #cacaca;
+  color: #8cc9f0;
+  font-weight: bold;
+  font-size: 3em;
+  justify-content: center;
+}
+
+.slide-outer:nth-child(2n) > span {
+  color: #a89cc8;
+}
+
+.slide-outer:nth-child(3n) > span {
+  color: #efa8b0;
+}
+
+.glider-perspective .glider-slide {
+  height: 150px !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1000px) rotateY(0deg) scale(1) translateZ(0);
+  transform-origin: 0 0;
+  transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glider-perspective .glider-slide.right-3 {
+  -webkit-transform: perspective(1000px) rotateY(-50deg) scale(1.45)
+    translateZ(0);
+  -webkit-transform-origin: 100% 50% 0;
+  transform: perspective(1000px) rotateY(-50deg) scale(1.45) translateZ(0);
+  transform-origin: 0% 50% 0;
+}
+
+.glider-perspective .glider-slide.left-3 {
+  -webkit-transform: perspective(1000px) rotateY(50deg) scale(1.45)
+    translateZ(0);
+  -webkit-transform-origin: 100% 50% 0;
+  transform: perspective(1000px) rotateY(50deg) scale(1.45) translateZ(0);
+  transform-origin: 0% 50% 0;
+}
+
+.glider-perspective .glider-slide.left-2 {
+  -webkit-transform: perspective(1000px) rotateY(50deg) scale(1.25) translateZ(0);
+  -webkit-transform-origin: 100% 50% 0;
+  transform: perspective(1000px) rotateY(50deg) scale(1.25) translateZ(0);
+  transform-origin: 100% 50% 0;
+}
+
+.glider-perspective .glider-slide.right-2 {
+  -webkit-transform: perspective(1000px) rotateY(-50deg) scale(1.25)
+    translateZ(0);
+  -webkit-transform-origin: 0 50% 0;
+  transform: perspective(1000px) rotateY(-50deg) scale(1.25) translateZ(0);
+  transform-origin: 0 50% 0;
+}
+
+.glider-perspective .glider-slide.left-1 {
+  -webkit-transform: perspective(1000px) rotateY(34deg) scale(1.1) translateZ(0);
+  -webkit-transform-origin: 100% 50% 0;
+  transform: perspective(1000px) rotateY(34deg) scale(1.1) translateZ(0);
+  transform-origin: 100% 50% 0;
+}
+
+.glider-perspective .glider-slide.right-1 {
+  -webkit-transform: perspective(1000px) rotateY(-34deg) scale(1.1)
+    translateZ(0);
+  -webkit-transform-origin: 0 50% 0;
+  transform: perspective(1000px) rotateY(-34deg) scale(1.1) translateZ(0);
+  transform-origin: 0 50% 0;
+}
