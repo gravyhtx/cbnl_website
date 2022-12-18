@@ -90,7 +90,7 @@ export const checkTypeof = (variable, type) => {
 
       ? output = {is: false, type: "undefined"}
 
-    // UNDEFINED = TRUE
+    // UNDEFINED = FALSE
     : type && type !== "undefined" && variable === undefined
 
       ? output = {is: false, type: "undefined"}
@@ -113,6 +113,11 @@ export const checkTypeof = (variable, type) => {
 
       ? output = {is: false, type: 'image'}
 
+    // PERCENTAGE = TRUE
+    : type && type === 'percentage' && /^(\d+|(\.\d+))(\.\d+)?%$/.test(variable)
+
+      ? output = {is: true, type: 'percentage'}
+    
     // OBJECT = TRUE (Uses 'isobject' package -- https://github.com/jonschlinkert/isobject)
     : type && type !== 'object' && isObject(variable)
 
@@ -157,13 +162,13 @@ export const checkType = (variable, type) => {
   if(type === 's' || type === 'str') {
     type = 'string'
   }
-  if(type === 'o' || type === 'obj') {
+  if(type === 'o' || type === 'obj' || type ==='{}') {
     type = 'object'
   }
-  if(type === 'a' || type === 'arr') {
+  if(type === 'a' || type === 'arr' || type === '[]') {
     type = 'array'
   }
-  if(type === 'multiarr' || type === 'arrs') {
+  if(type === 'multiarr' || type === 'arrs' || type === '[[]]') {
     type = 'arrays'
   }
   if(type === 'big') {
@@ -175,11 +180,14 @@ export const checkType = (variable, type) => {
   if(type === 'f' || type === 'fun' || type === 'func') {
     type = 'function'
   }
-  if(type === 'b' || type === 'bool') {
+  if(type === 'b' || type === 'bool' || type === '?') {
     type = 'boolean'
   }
   if(type === 'n' || type === 'num') {
     type = 'number'
+  }
+  if(type === 'p' || type === 'percent' || type === '%') {
+    type = 'percentage'
   }
   if(type === 'sym') {
     type = 'symbol'
@@ -189,6 +197,9 @@ export const checkType = (variable, type) => {
   }
   if(type === 'e' || type === 'el') {
     type = 'element'
+  }
+  if(type === '<>') {
+    type = 'node'
   }
   if(type === 'img') {
     type = 'image'

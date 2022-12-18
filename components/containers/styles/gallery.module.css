@@ -12,6 +12,7 @@
 }
 
 .container .imgContainer {
+  position: relative;
 }
 
 .container .imgContainer img {
@@ -28,7 +29,7 @@
 
 @media only screen and (max-width: 576px) {
   .container {
-    height: 600px;
+    height: 575px;
     padding: 0 20px;
   }
   .container h2 {

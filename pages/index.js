@@ -23,15 +23,22 @@ import outdoorServices from '../public/content/outdoorServices.txt';
 import renovation from '../public/content/renovation.txt';
 import ourNursery from '../public/content/ourNursery.txt';
 
-import poolside from '../public/images/projects/poolside1.png';
-import poolside2 from '../public/images/projects/poolside2.png';
-import poolside3 from '../public/images/projects/poolside3.png';
 import img1 from '../public/images/slides/img1.png';
 import img2 from '../public/images/slides/img2.png';
 import img3 from '../public/images/slides/img3.png';
 import img4 from '../public/images/slides/img4.png';
 import img5 from '../public/images/slides/img5.png';
 import img6 from '../public/images/slides/img6.png';
+import img7 from '../public/images/slides/img7.png';
+import img8 from '../public/images/slides/img8.png';
+import img9 from '../public/images/slides/img9.png';
+import img10 from '../public/images/slides/img10.png';
+import img11 from '../public/images/slides/img11.png';
+import img12 from '../public/images/slides/img12.png';
+import poolside from '../public/images/projects/poolside1.png';
+import poolside2 from '../public/images/projects/poolside2.png';
+import poolside3 from '../public/images/projects/poolside3.png';
+import blueprint from '../public/images/projects/blueprint.jpg';
 
 
 import styles from './style/Home.module.css';
@@ -116,7 +123,7 @@ export default function Home() {
     const heading = <><h1>{data.title}</h1><h2>{data.subtitle}</h2></>
 
     return (
-      <section className={styles.about}>
+      <section className={styles.about} id="about">
         <hgroup>
           {heading}
         </hgroup>
@@ -148,7 +155,7 @@ export default function Home() {
     }
 
     return (<>
-      <section className={styles.services+' row'}>
+      <section className={styles.services+' row'} id="services">
         <h2><span>SERVICES</span></h2>
         <div className={styles.flexWrapper}>
           <div className={styles.container}>
@@ -163,7 +170,7 @@ export default function Home() {
     const data = content.details;
 
     return (
-      <section className={styles.projects}>
+      <section className={styles.projects} id="projects">
         {/* <h2 className={styles.header}>PROJECTS</h2> */}
         <div className={styles.details}>
           <ImageDetails
@@ -193,18 +200,28 @@ export default function Home() {
   }
 
   const CallUs = () => {
+
+    const bkgImg = {
+      background: `url("${blueprint.src}") no-repeat fixed center`,
+      backgroundSize: 'cover',
+    };
+
     const Content = () => {
       return (
-        <div>
-          <h2>CALL US TODAY</h2>
-          <div className={styles.tel}>
-            <Contact element={'phone'} />
+        <div className={styles.container}>
+          <div className={styles.image} style={bkgImg}/>
+          <div className={styles.content}>
+            <h2>CALL US TODAY</h2>
+            <div className={styles.tel}>
+              <Contact element={'phone'} />
+            </div>
           </div>
         </div>
       )
     }
+
     return (
-      <section className={styles.callUs}>
+      <section className={styles.callUs} id="call-us">
         <Content />
       </section>
     )
@@ -212,7 +229,6 @@ export default function Home() {
 
   const Nursery = () => {
     const data = content.nursery;
-    console.log(content.nursery.content[0]);
     const Content = () => {
       return (
         data.content.map((item, index) => {
@@ -221,7 +237,7 @@ export default function Home() {
       )
     }
     return (
-      <section className={styles.nursery}>
+      <section className={styles.nursery} id="nursery">
         <h2 className={styles.header}>OUR NURSERY</h2>
         <div className={styles.details}>
           <Content />
@@ -249,12 +265,17 @@ export default function Home() {
     },{
       src: img6,
       alt: "Image 6"
+    },{
+      src: img7,
+      alt: "Image 7"
+    },{
+      src: img8,
+      alt: "Image 8"
     },];
-    return <Gallery imgObjArray={slides} />
+    return <Gallery />
 }
 
   const Verified = () => {
-    console.log(logoLight.src)
     const data = content.verified;
     const logo = <Image src={logoLight.src}
       className={styles.logo}
@@ -279,7 +300,7 @@ export default function Home() {
     }
     
     return (
-      <section className={styles.verified}>
+      <section className={styles.verified} id="worthy">
         <div className={styles.logoContainer}>{logo}</div>
         <div className={styles.icons+' row'}>
           <Panels />
@@ -291,7 +312,6 @@ export default function Home() {
 
   return (<>
     <DefaultLayout title={title} swipeNav={false}>
-      
       <About />
       <Services />
       <Projects />

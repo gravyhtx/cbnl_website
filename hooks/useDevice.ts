@@ -1,3 +1,5 @@
+import { isMobile } from 'react-device-detect';
+
 interface Navigator {
   onLine: any;
   maxTouchPoints: any;
@@ -127,5 +129,6 @@ export const useDevice = () => {
     preferredLanuage: navigator.language,
     hasCamera: hasCamera,
     connectedDevices: nav.hid,
+    isMobile: isMobile,
   }
 }

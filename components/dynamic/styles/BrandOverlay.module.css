@@ -37,6 +37,7 @@
   align-items: center;
   position: absolute;
   margin: 0 auto;
+  height: 100vh;
   animation-delay: .5s;
   animation: overlay-focus 5s ease-in-out 0s forwards;
 }

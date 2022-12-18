@@ -1,5 +1,6 @@
 const withPlugins = require('next-compose-plugins');
-const withBundleAnalyzer = require('@next/bundle-analyzer')
+const withBundleAnalyzer = require('@next/bundle-analyzer');
+const { withPlaiceholder } = require("@plaiceholder/next");
 
 const bundleAnalyzer = withBundleAnalyzer({enabled: process.env.ANALYZE === 'true'})
 
@@ -20,6 +21,9 @@ const nextConfig = {
     fontLoaders: [
       { loader: '@next/font/google', options: { subsets: ['latin'] } },
     ],
+  },
+  images: {
+    domains: ["images.unsplash.com"],
   },
   webpack(config, options) {
     const { isServer } = options;
@@ -68,4 +72,4 @@ const nextConfig = {
   // }
 }
 
-module.exports = withPlugins([[bundleAnalyzer]], nextConfig)
+module.exports = withPlugins([[bundleAnalyzer]], nextConfig);

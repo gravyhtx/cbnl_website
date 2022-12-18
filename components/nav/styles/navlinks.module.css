@@ -3,6 +3,8 @@
   color: var(--sidenav_link-color);
   padding-left: 40px;
   transition: 1s all;
+  text-shadow: none;
+  transition: 1s text-shadow;
 }
 
 .link.side a.navlink:hover {
@@ -74,12 +76,16 @@ a.navlink {
   padding-left: 0;
   font-size: 1.6rem;
   color: var(--green-1);
+  text-shadow: 0 0 none;
+  transition: 1s text-shadow;
 }
 
 .link.bottom a.navlink:hover {
   padding-left: 0;
   font-size: 1.6rem;
   color: white;
+  text-shadow: 0 0 15px #aaa;
+  transition: 1s text-shadow;
 }
 
 /* HOVER ICON */

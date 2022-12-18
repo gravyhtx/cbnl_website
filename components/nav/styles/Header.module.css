@@ -11,6 +11,8 @@
 .mobileHeader {
   display: none;
   background-color: var(--green-6);
+  border-bottom: 3px solid var(--green-5);
+  user-select: none;
 }
 
 @media only screen and (max-width: 768px) {
@@ -31,7 +33,7 @@
 
   .mobileHeader .container {
     position: relative;
-    height: 100px;
+    height: 80px;
   }
 
   .mobileHeader img {

@@ -46,6 +46,7 @@
   height: 100vh;
   overflow: hidden;
   background-color: var(--light-green);
+  user-select: none;
 }
 
 .homepageHero .in {

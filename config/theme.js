@@ -9,25 +9,25 @@ export const navlinks = [
   },
   {
     name: 'Services',
-    link: '/contact',
+    link: '#services',
     alt: `Learn about our expert services.`,
     sublinks: false,
   },
   {
-    name: 'Projects',
-    link: '/projects',
-    alt: `Check out our projects.`,
+    name: 'Nursery',
+    link: '#nursery',
+    alt: `Information about Our Nursery.`,
     sublinks: false,
   },
   {
-    name: 'About',
-    link: '/about',
+    name: 'Gallery',
+    link: '#gallery',
     alt: `Learn more about us.`,
     sublinks: false,
   },
   {
     name: 'Contact Us',
-    link: '/contact',
+    link: '#contact',
     alt: `Need to request a service? Drop us a line.`,
     sublinks: false,
   }

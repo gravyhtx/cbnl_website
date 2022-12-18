@@ -1,22 +1,23 @@
 import Head from 'next/head';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useClientRect } from '../hooks/useClientRect';
 
-// import TopNav from '../components/TopNav';
-// import BrandHeader from './BrandHeader';
-import Footer from '../components/nav/Footer';
+import {isMobile} from 'react-device-detect';
 
 import SideNav from '../components/nav/SideNav';
 import { HomepageHero } from '../components/dynamic/Hero';
-
 import { HomeHeader, BrandHeader, MobileHeader } from '../components/nav/Header';
 import BrandOverlay from '../components/dynamic/BrandOverlay';
+import Footer from '../components/nav/Footer';
 
 import { SvgContainer } from '../components/containers/SvgContainer';
 
 import { ScrollToPosition } from '../modules/scrollSystem';
 import { authCheck } from '../utils/siteFunctions';
+import { useDevice } from '../hooks/useDevice';
+import { useClientRect } from '../hooks/useClientRect';
+import useScrollPosition from '../hooks/useScrollPosition';
+import useScrollProgress from '../hooks/useScrollProgress';
 
 import website from '../config/site-data.json';
 import { metaTags } from '../config/theme';
@@ -47,6 +48,12 @@ export default function DefaultLayout({
   const path = router.pathname;
   const isHome = path === '/' ? true : false;
 
+  let mobileCheck = false;
+  
+  useEffect(() => {
+    mobileCheck = useDevice().isMobile;
+  })
+
   useHeader = useHeader === false ? false : true;
   useBrandOverlay = useBrandOverlay === false || isHome === false ? false : true;
   useSideNav = useSideNav ? useSideNav : true;
@@ -76,9 +83,9 @@ export default function DefaultLayout({
   }
 
   const SideNavContainer = () => {
-    return ( useSideNav
+    return useSideNav
       ? <SideNav header={<SvgContainer svg={logo.src} sizeObj={false} />} activate={sideNav} setActivate={setSideNav} />
-      : <></>)
+      : <></>;
   }
 
   const [playIntro, setPlayIntro] = useState(isHome === true ? true : false);
@@ -88,6 +95,26 @@ export default function DefaultLayout({
       ? <div onClick={() => setPlayIntro()}><BrandOverlay /></div>
       : <></>
     }</>
+  
+  const layoutRef = useRef(null);
+  const layoutCurrent = layoutRef.current;
+  const [scrollPos, setScroll] = useState({})
+  
+  
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+      const position = window.pageYOffset;
+      setScrollPosition(position);
+  };
+
+  useEffect(() => {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      console.log(scrollPosition);
+
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+      };
+  }, []);
 
   const Header = () => {
     const HomeHero = () => {
@@ -126,12 +153,17 @@ export default function DefaultLayout({
   containerClasses = containerClasses ? " "+containerClasses : "";
   backToTop = backToTop === true ? true : false;
 
+  console.log(useScrollPosition())
+
   // GET HEADER SIZE
   // const [rect, ref] = useClientRect();
   // console.log(rect);
 
   return (<>
-    <div className={ "animate__animated animate__fadeIn layout"+layoutClasses+swipeNav } id="layout">
+    <div
+      className={ "animate__animated animate__fadeIn layout"+layoutClasses+swipeNav }
+      ref={layoutRef}
+      id="layout">
       <Head>
         <title>{ title ? website.name + " | " + title : website.name }</title>
         { metaTags( title, description, scalable ) }
@@ -148,7 +180,7 @@ export default function DefaultLayout({
               { withAuth && authCheck() || !withAuth ? children : <></> }
             </main>
             
-          <Footer />
+          <Footer isMobile={mobileCheck} />
           { useSideNav === true ? <SideNavTrigger /> : <></> }
           { useSideNav === true ? <SideNavContainer /> : <></> }
           </>

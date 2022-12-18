@@ -42,7 +42,6 @@ const NavLinks: FC<Props> = ({ location, classes, hoverIcon }): JSX.Element => {
 
   // Handle Active and Hover
   const [hover, setHover] = useState(null);
-  const placeholder = '// '
   const ActiveIcon = () => location === 'side' ? <span className={styles.before}>{''}</span> : <></>;
 
   const handleHover = (index: number | null) => {

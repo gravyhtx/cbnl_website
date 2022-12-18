@@ -20,6 +20,7 @@
 
 .imageBox {
   width: 33.3%;
+  user-select: none;
 }
 
 .details {

@@ -5,7 +5,6 @@ import { isMobile } from 'react-device-detect';
 
 import Notification from '../notify/Notification';
 import NavLinks from './NavLinks';
-import ImageContainer from '../containers/ImageContainer';
 
 import website from '../../config/site-data.json';
 
@@ -14,6 +13,7 @@ import navStyles from './styles/navHeader.module.css';
 
 import logo from '../../public/logo-dark.png';
 import mobileLogo from '../../public/logo-light.png';
+import Contact from '../elements/Contact';
 
 const Logo = () => {
   const logoAlt = "Site Logo"
@@ -42,9 +42,8 @@ export const NotificationBar = ({ notifyLink, helpLink }) => {
   notifyLink = website.notifyLink ? website.notifyLink : false;
   helpLink = website.helpLink ? website.helpLink : false;
 
-  const phoneNumber = isMobile
-    ? <span className={styles.phone}><a href={`tel:${website.phone}`}>tel</a></span>
-    : <span className={styles.phone}>{website.phone}</span>
+  const phoneNumber = <Contact element='phone' />
+
 
   const notifyText = {
     "desktop": <>Welcome to Chackbay Nursery & Landscaping. Call us
@@ -63,7 +62,7 @@ export const NotificationBar = ({ notifyLink, helpLink }) => {
 
   return (<>
     {text ?
-      <div className={styles.notificationBar}>
+      <div className={styles.notificationBar+' disable-highlight'}>
         <Notification
           text={text?text:""}
           link={notifyLink}

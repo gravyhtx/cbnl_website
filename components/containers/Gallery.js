@@ -8,6 +8,13 @@ import img3 from '../../public/images/slides/img3.png';
 import img4 from '../../public/images/slides/img4.png';
 import img5 from '../../public/images/slides/img5.png';
 import img6 from '../../public/images/slides/img6.png';
+import img7 from '../../public/images/slides/img7.png';
+import img8 from '../../public/images/slides/img8.png';
+import img9 from '../../public/images/slides/img9.png';
+import img10 from '../../public/images/slides/img10.png';
+import img11 from '../../public/images/slides/img11.png';
+import img12 from '../../public/images/slides/img12.png';
+import img13 from '../../public/images/slides/img13.png';
 
 import styles from './styles/gallery.module.css';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -36,6 +43,27 @@ const Gallery = ({ imgObjArray }) => {
   },{
     src: img6,
     alt: "Image 6"
+  },{
+    src: img7,
+    alt: "Image 7"
+  },{
+    src: img8,
+    alt: "Image 8"
+  },{
+    src: img9,
+    alt: "Image 9"
+  },{
+    src: img10,
+    alt: "Image 10"
+  },{
+    src: img11,
+    alt: "Image 11"
+  },{
+    src: img12,
+    alt: "Image 12"
+  },{
+    src: img13,
+    alt: "Image 13"
   },];
 
   const Slides = () => {
@@ -69,9 +97,9 @@ const Gallery = ({ imgObjArray }) => {
       : 1
 
   return (
-    <section className={styles.container}>
+    <section className={styles.container} id="gallery">
       <h2>GALLERY</h2>
-      <Glider slidesToShow={slidesToShow}>
+      <Glider hasDots={true} slidesToShow={slidesToShow}>
         <Slides />
       </Glider>  
     </section>
