@@ -1,48 +1,53 @@
 import { element } from 'prop-types';
-import { useState, useCallback, ReactNode, RefObject, ReactElement, createRef } from 'react';
+import { useState, useCallback, RefObject, useEffect } from 'react';
 
 export function useClientRect(
-  property?: 'height' | 'width' | 'top' | 'bottom' | 'left' | 'right' | 'x' | 'y' | undefined,
+  property?: 'height' | 'width' | 'top' | 'bottom' | 'left' | 'right' | 'x' | 'y' | 'all' | undefined,
   elementRef?: RefObject<HTMLElement>,
 ) {
-  if(elementRef) {
+  if(elementRef && elementRef.current !== null) {
     return elementRef.current.getBoundingClientRect();
   }
   const [rect, setRect] = useState(null);
   const ref = useCallback((node: Element | null) => {
-    if (node !== null && rect === null && property !== undefined) {
+    if (node !== null && rect === null && (property !== undefined || 'all')) {
       setRect(node.getBoundingClientRect()[property]);
     }
-    if (node !== null && rect === null && property === undefined) {
+    else if (node !== null && rect === null && (property === undefined || 'all')) {
       setRect(node.getBoundingClientRect());
     }
   }, []);
-  return [rect, ref];
+  return [rect, ref] as const;
 }
 
-// const MyComponent = () => {
-//   const [node, setNode] = useState<Element | null>(null);
-//   const [rect, ref] = useClientRect();
-
-//   useEffect(() => {
-//     ref(node);
-//   }, [node]);
-
-//   return (
-//     // ...
-//   );
-// }
-
-export const elIsInView = (
-  elementRef: Element,
+export const elementIsVisible = (
+  elementRef: RefObject<HTMLElement>,
 ) => {
+  
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const refresh = () => {
+      const rect = elementRef.current.getBoundingClientRect();
+      if (rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= document.body.clientHeight &&
+        rect.right <= document.body.clientWidth) {
+        setIsVisible(true);
+      }
+      else {
+        setIsVisible(false);
+      }
+    }
+    if(elementRef.current !== null) {
+      refresh();
+      if(document) {
+        document.body.addEventListener("scroll", refresh);
+        return () => document.body.removeEventListener('scroll', refresh);
+      }
+    }
+  })
 
-  const rect = elementRef.getBoundingClientRect();
-
-  if (rect.top >= 0 &&
-  rect.left >= 0 &&
-  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-  rect.right <= (window.innerWidth || document.documentElement.clientWidth)) {
-    return true;
-  }
+  return isVisible;
+  
 }

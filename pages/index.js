@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import * as Unicons from '@iconscout/react-unicons';
@@ -40,8 +40,8 @@ import poolside2 from '../public/images/projects/poolside2.png';
 import poolside3 from '../public/images/projects/poolside3.png';
 import blueprint from '../public/images/projects/blueprint.jpg';
 
-
 import styles from './style/Home.module.css';
+import { elementIsVisible } from '../hooks/useClientRect';
 
 export default function Home() {
 // APP STATE
@@ -199,6 +199,39 @@ export default function Home() {
     )
   }
 
+  const callusRef = useRef(null);
+
+  // if(elementIsVisible(callusRef)) {
+  //   vizChx = 'YAHHHS!';
+  // }
+  // else {
+  //   vizChx = 'NOPE';
+  // }
+
+  // useEffect(() => {
+  //   const refresh = () => {
+  //     const rect = callusRef.current.getBoundingClientRect();
+  //     if (rect.top >= 0 &&
+  //       rect.left >= 0 &&
+  //       rect.bottom <= document.body.clientHeight &&
+  //       rect.right <= document.body.clientWidth) {
+  //       setVizChx('YAHHHS!')
+  //       return true;
+  //     }
+  //     else {
+  //       setVizChx('NOPE')
+  //       return false;
+  //     }
+  //   }
+  //   if(callusRef.current !== null) {
+  //     refresh();
+  //   }
+  //   if(document) {
+  //     document.body.addEventListener("scroll", refresh);
+  //     return () => document.body.removeEventListener('scroll', refresh);
+  //   }
+  // })
+    
   const CallUs = () => {
 
     const bkgImg = {
@@ -209,7 +242,7 @@ export default function Home() {
     const Content = () => {
       return (
         <div className={styles.container}>
-          <div className={styles.image} style={bkgImg}/>
+          {/* <div className={styles.image} style={bkgImg}/> */}
           <div className={styles.content}>
             <h2>CALL US TODAY</h2>
             <div className={styles.tel}>
@@ -221,7 +254,7 @@ export default function Home() {
     }
 
     return (
-      <section className={styles.callUs} id="call-us">
+      <section ref={callusRef} className={styles.callUs} id="call-us">
         <Content />
       </section>
     )
@@ -308,7 +341,6 @@ export default function Home() {
       </section>
     )
   }
-
 
   return (<>
     <DefaultLayout title={title} swipeNav={false}>

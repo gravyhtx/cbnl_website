@@ -15,9 +15,8 @@ import { SvgContainer } from '../components/containers/SvgContainer';
 import { ScrollToPosition } from '../modules/scrollSystem';
 import { authCheck } from '../utils/siteFunctions';
 import { useDevice } from '../hooks/useDevice';
-import { useClientRect } from '../hooks/useClientRect';
+import { elementIsVisible, useClientRect } from '../hooks/useClientRect';
 import useScrollPosition from '../hooks/useScrollPosition';
-import useScrollProgress from '../hooks/useScrollProgress';
 
 import website from '../config/site-data.json';
 import { metaTags } from '../config/theme';
@@ -72,16 +71,6 @@ export default function DefaultLayout({
     setSideNav(!sideNav)
   }, [sideNav])
 
-  const SideNavTrigger = () => {
-    return (
-      <div className="sidenav-trigger">
-        <div className='container'>
-          <button onClick={openSideNav}>&#9776;</button>
-        </div>
-      </div>
-    )
-  }
-
   const SideNavContainer = () => {
     return useSideNav
       ? <SideNav header={<SvgContainer svg={logo.src} sizeObj={false} />} activate={sideNav} setActivate={setSideNav} />
@@ -95,26 +84,6 @@ export default function DefaultLayout({
       ? <div onClick={() => setPlayIntro()}><BrandOverlay /></div>
       : <></>
     }</>
-  
-  const layoutRef = useRef(null);
-  const layoutCurrent = layoutRef.current;
-  const [scrollPos, setScroll] = useState({})
-  
-  
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const handleScroll = () => {
-      const position = window.pageYOffset;
-      setScrollPosition(position);
-  };
-
-  useEffect(() => {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      console.log(scrollPosition);
-
-      return () => {
-          window.removeEventListener('scroll', handleScroll);
-      };
-  }, []);
 
   const Header = () => {
     const HomeHero = () => {
@@ -127,16 +96,16 @@ export default function DefaultLayout({
       </>)
     }
     return (
-      <hgroup className={styles.header}>
-        <MobileHeader />
-        { isHome === true ? <HomeHero /> : <></> }
-        { useHeader && isHome === true ? <HomeHeader /> : useHeader && isHome === false ? <BrandHeader /> : <></>}
-        { hero && isHome === false ? hero : <></> }
-      </hgroup>
+      <div>
+        <hgroup className={styles.header}>
+          <MobileHeader />
+          { isHome === true ? <HomeHero /> : <></> }
+          { useHeader && isHome === true ? <HomeHeader /> : useHeader && isHome === false ? <BrandHeader /> : <></>}
+          { hero && isHome === false ? hero : <></> }
+        </hgroup>
+      </div>
     )
   }
-
-  // const MemoHeader = useMemo(() => <Header />, [])
 
   useEffect(() => {
     const time = setInterval(() => {
@@ -153,11 +122,87 @@ export default function DefaultLayout({
   containerClasses = containerClasses ? " "+containerClasses : "";
   backToTop = backToTop === true ? true : false;
 
-  console.log(useScrollPosition())
+  // GET CLIENT RECT AT "MAIN"
+  function useRect( property, elementRef ) {
+    if(elementRef && elementRef.current !== null) {
+      return elementRef.current.getBoundingClientRect();
+    }
+    const [rect, setRect] = useState(null);
+    const ref = useCallback((node) => {
+      if (node !== null && rect === null && property !== undefined) {
+        setRect(node.getBoundingClientRect()[property]);
+      }
+      else if (node !== null && rect === null && property === undefined) {
+        setRect(node.getBoundingClientRect());
+      }
+    }, []);
+    return [rect, ref];
+  }
 
   // GET HEADER SIZE
-  // const [rect, ref] = useClientRect();
-  // console.log(rect);
+  const [rect, headerRef] = useRect();
+
+  // useEffect(() => {
+  //   console.log(rect);
+  // },[rect]);
+
+  // GET SCROLL POSITION
+  const layoutRef = useRef(null);
+  const elementRef = layoutRef;
+  // console.log(useScrollPosition(elementRef));
+  const mainRef = useRef(null);
+  
+  // const elInView = (elementRef) => {
+    
+  //   const [isVisible, setIsVisible] = useState(false);
+
+  //   useEffect(() => {
+  //     const refresh = () => {
+  //       const rect = elementRef.current.getBoundingClientRect();
+  //       if (rect.top >= 0 &&
+  //         rect.left >= 0 &&
+  //         rect.bottom <= document.body.clientHeight &&
+  //         rect.right <= document.body.clientWidth) {
+  //           setIsVisible(true);
+  //       }
+  //       else {
+  //         setIsVisible(false);
+  //       }
+  //       console.log(isVisible)
+  //     }
+  //     if(elementRef.current !== null) {
+  //       refresh();
+  //       if(document) {
+  //         document.body.addEventListener("scroll", refresh);
+  //         return () => document.body.removeEventListener('scroll', refresh);
+  //       }
+  //     }
+  //   })
+  //   return isVisible;
+  // }
+
+  const SideNavTrigger = () => {
+    return (<>
+      {/* { elInView(mainRef) ?
+        <div className="sidenav-trigger">
+          <div className='container'>
+            <button onClick={openSideNav}>&#9776;</button>
+          </div>
+        </div> : <></>} */}
+      <div className="sidenav-trigger">
+        <div className='container'>
+          <button onClick={openSideNav}>&#9776;</button>
+        </div>
+      </div>
+    </>)
+  }
+  const Main = () => {
+    return (
+      <main ref={mainRef} className={ "main-content"+containerClasses+homeClass } id={id?id:"content"}>
+        { withAuth && authCheck() || !withAuth ? children : <></> }
+      </main>
+    )
+  }
 
   return (<>
     <div
@@ -173,13 +218,8 @@ export default function DefaultLayout({
       { playIntro === true
         ? <Intro />
         : <>
-          {/* <Header ref={ref} /> */}
-          {/* <MemoHeader /> */}
           <Header />
-            <main className={ "main-content"+containerClasses+homeClass } id={id?id:"content"}>
-              { withAuth && authCheck() || !withAuth ? children : <></> }
-            </main>
-            
+          <Main />
           <Footer isMobile={mobileCheck} />
           { useSideNav === true ? <SideNavTrigger /> : <></> }
           { useSideNav === true ? <SideNavContainer /> : <></> }

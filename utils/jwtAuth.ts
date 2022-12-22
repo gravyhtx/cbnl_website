@@ -4,7 +4,7 @@ import { verify, sign } from 'bcrypt';
 const secret = process.env.JWT_SECRET ? process.env.JWT_SECRET : 'mysecretsshhhhh';
 const expiration = '2h';
 
-export function authMiddleware(req, res, next) {
+export function authMiddleware(req: any, res: any, next: any) {
   // allows token to be sent via  req.query or headers
   let token = req.query.token || req.headers.authorization;
 

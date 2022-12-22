@@ -1,6 +1,10 @@
 import { useEffect, useState, Fragment, ReactNode, } from 'react';
 import Image from 'next/image';
 
+// GLIDER
+import Glider from '../carousel/Glider';
+import GliderPanel from '../carousel/GliderPanel';
+
 // SLIDES
 import hero0 from '../../public/images/hero/hero-slide0.png';
 import hero1 from '../../public/images/hero/hero-slide1.png';
@@ -62,6 +66,24 @@ const heroSlide = (
   )
 }
 
+const Logo = () => {
+
+
+  const logoAlt = website.name ?  website.name +  " Site Logo" : "Site Logo";
+
+  const siteLogo =
+    <div className={styles.logoContainer}>
+      <Image src={logoDark}
+        className={styles.logo}
+        width={logoDark.width}
+        height={logoDark.height}
+        alt={logoAlt}
+        sizes="100vw"
+        placeholder="blur" />
+    </div>
+  return siteLogo;
+}
+
 export const HeroTest = () => {
   const opts = {
     map: true,
@@ -87,23 +109,31 @@ export const HomepageHero = () => {
     rotate: false,
   }
 
-  const logoAlt = website.name ?  website.name +  " Site Logo" : "Site Logo";
-
-  const siteLogo =
-    <div className={styles.logoContainer}>
-      <Image src={logoDark}
-        className={styles.logo}
-        width={logoDark.width}
-        height={logoDark.height}
-        alt={logoAlt}
-        sizes="100vw"
-        placeholder="blur" />
-    </div>
-
   return (
     <div className={styles.homepageHero}>
       { heroSlide(0, opts) }
-      { siteLogo }
+      <Logo />
     </div>
   )
 }
+
+
+// export const HeroSlider = () => {
+//   const opts = {
+//     map: false,
+//     rotate: false,
+//   }
+
+//   return (
+//     <div className={styles.homepageHero}>
+//       <Glider hasDots={true} slidesToShow={slidesToShow}>
+//         <GliderPanel key={index} onClick={() => openSlide()}>
+//             <div className={styles.imgContainer}>
+//             <Image src={slideSrc} alt={slideAlt} sizes="100vw" fill />
+//           </div>
+//         </GliderPanel>
+//       </Glider>
+//       <Logo />
+//     </div>
+//   )
+// }

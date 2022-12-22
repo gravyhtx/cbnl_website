@@ -101,10 +101,12 @@ export const useDevice = () => {
   const hasCamera: boolean = 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices ? true : false;
 
   const wifiConnection = () => {
-    if(online) {
-      const connection = online ? (nav.connection || nav.mozConnection || nav.webkitConnection) : undefined;
-      const effectiveType = connection.effectiveType;
-      const type = connection.type;
+    if(online && nav.product.toLowerCase() !== "gecko") {
+      const connection = online
+      ? (nav.connection || nav.webkitConnection)
+      : { effectiveType: undefined, type: undefined };
+      const effectiveType = connection ? connection.effectiveType : undefined;
+      const type = connection ? connection.type : undefined;
       return {
         connection: connection,
         effectiveType: effectiveType,
