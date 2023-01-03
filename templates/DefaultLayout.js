@@ -12,7 +12,7 @@ import { SvgContainer } from '../components/containers/SvgContainer';
 import { heroSlides } from '../config/site-images.config';
 
 import { ScrollToPosition } from '../modules/scrollSystem';
-import { authCheck } from '../utils/siteFunctions';
+// import { authCheck } from '../utils/siteFunctions';
 import { isMobile } from 'react-device-detect';
 
 import { elementIsVisible, useClientRect } from '../hooks/useClientRect';
@@ -63,11 +63,11 @@ const DefaultLayout = ({
   useSideNav = useSideNav ? useSideNav : true;
   swipeNav = swipeNav === false ? ' no-swiping' : '';
 
-  useEffect(() => {
-    if(withAuth && (authCheck() === false)) {
-      window.location.href = authRedirect ? authRedirect : '/';
-    }
-  });
+  // useEffect(() => {
+  //   if(withAuth && (authCheck() === false)) {
+  //     window.location.href = authRedirect ? authRedirect : '/';
+  //   }
+  // });
   
   const [sideNav, setSideNav] = useState(false);
 
@@ -156,7 +156,8 @@ const DefaultLayout = ({
     return (
       <main ref={mainRef} className={ "main-content"+containerClasses+homeClass } id={id?id:"content"}>
         { mainViz }
-        { withAuth && authCheck() || !withAuth ? children : <></> }
+        { children }
+        {/* { withAuth && authCheck() || !withAuth ? children : <></> } */}
       </main>
     )
   }
