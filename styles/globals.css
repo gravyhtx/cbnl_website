@@ -200,12 +200,12 @@
     --light-green: #e0ecda;
     --light-green-2: #c0ceb2;
 
-    --green-1: #dde9d0;
-    --green-2: #c2d8ac;
-    --green-3: #7da878;
-    --green-4: #628b6e;
-    --green-5: #2f4633;
-    --green-6: #213424;
+    --green-1: #d6e3d6;
+    --green-2: #a7c2a8;
+    --green-3: #82a289;
+    --green-4: #4f6e56;
+    --green-5: #293e35;
+    --green-6: #1a241f;
     /* --green-1: #e4e6d9;
     --green-2: #c0ceb2;
     --green-3: #8ba888;
@@ -405,6 +405,37 @@
     --theme-font-size: 3rem;
   }
 }
+
+
+/*=====================*/
+/*==<([ CSS RESET ])>==*/
+/*=====================*/
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+
 
 /*======================*/
 /*==<([ DOM STYLES ])>==*/

@@ -1,5 +1,42 @@
-const TextContainer = ({ containerClasses, containerId, header, headerClasses, headerId,
-    children, textId, textClasses, contain, border, margin, fnClick, fnChange, fnBlur }) => {
+import { FC, ReactNode } from "react";
+
+interface Props {
+  children: ReactNode;
+  header?: string | ReactNode;
+  attributes?: {
+    headerClasses?: string;
+    headerId?: string;
+    containerClasses?: string;
+    containerId?: string;
+    textClasses?: string;
+    textId?: string;
+  }
+  opts?: {
+    border?: boolean;
+    contain?: boolean;
+    margin?: boolean;
+  }
+  fn?: {
+    click?: () => any;
+    change?: () => any;
+    blur?: () => any;
+  }
+}
+
+
+const TextContainer: FC<Props> = ({ children, header, attributes, opts, fn }) => {
+
+  const {
+    headerClasses,
+    headerId,
+    containerClasses,
+    containerId,
+    textClasses,
+    textId
+  } = attributes;
+
+  const { border, contain, margin } = opts;
+  const { click, change, blur } = fn;
 
   let cClass = containerClasses ? " "+containerClasses : "";
   let cId = containerId || "";
@@ -10,18 +47,18 @@ const TextContainer = ({ containerClasses, containerId, header, headerClasses, h
   let borders = border ? " borders" : "";
   let container = contain === undefined || contain === false ? "" : " contain";
 
-  const handleClick = () =>  fnClick();
+  const handleClick = () =>  click();
 
-  const handleChange = () => fnChange();
+  const handleChange = () => change();
 
-  const handleBlur = () => fnBlur();
+  const handleBlur = () => blur();
 
   return (
     <div className={margin === false ? "text-container no-margin" : "text-container"}>
       <div
-        onClick={fnClick?handleClick:null}
-        onChange={fnChange?handleChange:null}
-        onBlur={fnBlur?handleBlur:null}
+        onClick={click?handleClick:null}
+        onChange={change?handleChange:null}
+        onBlur={blur?handleBlur:null}
         className={"text-container box" + cClass + borders + container}
         id={cId}>
           {header ? <header className={"text-container_header"+hClass} id={hId}>{header}</header> : <></>}

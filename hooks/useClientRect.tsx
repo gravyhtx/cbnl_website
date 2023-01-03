@@ -1,9 +1,8 @@
-import { element } from 'prop-types';
 import { useState, useCallback, RefObject, useEffect } from 'react';
 
 export function useClientRect(
-  property?: 'height' | 'width' | 'top' | 'bottom' | 'left' | 'right' | 'x' | 'y' | 'all' | undefined,
   elementRef?: RefObject<HTMLElement>,
+  property?: 'height' | 'width' | 'top' | 'bottom' | 'left' | 'right' | 'x' | 'y' | 'all' | undefined,
 ) {
   if(elementRef && elementRef.current !== null) {
     return elementRef.current.getBoundingClientRect();
@@ -18,6 +17,17 @@ export function useClientRect(
     }
   }, []);
   return [rect, ref] as const;
+}
+
+export function useRect(): [
+  DOMRect | undefined,
+  (node: HTMLElement | null) => void
+] {
+  const [rect, setRect] = useState<DOMRect | undefined>(undefined);
+  const ref = useCallback((node: HTMLElement | null): void => {
+    if (node) setRect(node.getBoundingClientRect());
+  }, []);
+  return [rect, ref];
 }
 
 export const elementIsVisible = (

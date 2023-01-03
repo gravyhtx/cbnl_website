@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { navlinks } from "../../config/theme";
+import { navlinks } from "../../config/theme.config";
 
 const TopNav = ({ links }) => {
   links = links ? links : navlinks;

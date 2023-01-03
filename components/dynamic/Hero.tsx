@@ -10,6 +10,7 @@ import hero0 from '../../public/images/hero/hero-slide0.png';
 import hero1 from '../../public/images/hero/hero-slide1.png';
 import hero2 from '../../public/images/hero/hero-slide2.png';
 import hero3 from '../../public/images/hero/hero-slide3.png';
+import { heroSlides } from '../../config/site-images.config';
 // LOGO
 import logoDark from '../../public/logo-dark.png';
 
@@ -17,6 +18,7 @@ import website from '../../config/site-data.json';
 import styles from './styles/hero.module.css';
 
 const homeSlides = [ hero0, hero1, hero2, hero3 ];
+// console.log(heroSlides())
 
 const heroSlide = (
   index?: number,
@@ -53,16 +55,14 @@ const heroSlide = (
   }
 
   return (
-    // <div className={styles.slide} style={{ position: 'initial' }}>
-      <Image className={styles.slide + ' ' + fade}
-        style={display(index)}
-        src={homeSlides[imgIndex]}
-        alt={`Hero Image ${imgIndex+1}`}
-        sizes="100vw"
-        placeholder="blur"
-        quality={80}
-        fill={true} />
-    // </div>
+    <Image className={styles.slide + ' ' + fade}
+      style={display(index)}
+      src={homeSlides[imgIndex]}
+      alt={`Hero Image ${imgIndex+1}`}
+      sizes="100vw"
+      placeholder="blur"
+      quality={80}
+      fill={true} />
   )
 }
 

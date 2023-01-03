@@ -2,6 +2,8 @@
 //*==<([ MODAL CONTAINER ])>==*//
 //*===========================*//
 
+import { FC, ReactElement, ReactNode } from "react";
+
 //  This is a pop-up modal with an outer shell to darken the background and serve as a clickable element to
 //  close the modal (instead of using a click event on the document behind it). This is so that 'useState' and
 //  'useEffect' aren't needed at all while being able to destroy itself when closed instead of using 'display:
@@ -25,24 +27,55 @@
 //  will be styles through an object to move certain options to here with JS instead of CSS in the 'settings'
 //  object.
 
+interface Props {
+  children: ReactNode;
+  activate: Boolean;
+  setActivate: (activate: boolean) => void;
+  size?: 'small' | 'medium' | 'large' | string | undefined;
+  closeButton?: ReactElement | undefined;
+  classes?: {
+    modal?: string;
+    title?: string;
+  };
+  labels?: {
+    title?: string;
+    id: string;
+  };
+  opts?: {
+    addSpace?: boolean;
+    scroll?: boolean;
+    border?: 'none' | 'thin' | boolean;
+    blankSlate?: boolean;
+    blur: boolean;
+  };
+}
 
-const Modal = ({ title, children, activate, setActivate, size, id, closeButton, modalClasses,
-  titleClasses, addSpace, scroll, border, blankSlate, blur }) => {
+const Modal: FC<Props> = ({
+  children,
+  activate,
+  setActivate,
+  labels,
+  size,
+  closeButton,
+  classes,
+  opts
+}) => {
 
 // Set 'wrapper' & 'outer' wrapper parameters
-id = id ? id+'_' : '';
 let active = activate ? ' active' : '';
 
-size = size ? size.trim() : '';
+const { title, id } = labels;
+const { addSpace, scroll, border, blankSlate, blur } = opts;
+
 size = size==='md' || size==='medium'
-  ? ' md'
+  ? 'md'
 : size==='lg' || size==='large'
   ? 'lg'
-: size==='sm' | size==='small'
+: size==='sm' || size==='small'
   ? 'sm'
   : '';
 
-addSpace = addSpace === true
+const spacing = addSpace === true
   ? ' add-space'
 : 'more'
   ? ' add-more-space'
@@ -51,80 +84,85 @@ addSpace = addSpace === true
   : '';
 
 // Add custom modal 'container' classes
-modalClasses = modalClasses ? ' '+modalClasses : '';
+const modalClasses = classes.modal ? ' '+classes.modal : '';
+// Add additional Title classes
+const titleClasses = classes.title ? ' '+classes.title : '';
+
 // If 'blankSlate' is true, the modal wrapper will not be stylized, the border
 // styles will be determined by custom classes for the additional modal classes.
-blankSlate = blankSlate === true ? ' no-style' : '';
+const removeStyles = blankSlate === true ? ' no-style' : '';
 // Make content scrollable by default
-scroll = scroll !== false ? ' scroll' : '';
+const scrollable = scroll !== false ? ' scroll' : '';
 // Border options
-border = border === false || border === 'none' ? ' no-border' : border === 'thin' ? ' thin-border' : '';
+const borderStyle = border === false || border === 'none'
+    ? ' no-border'
+  : border === 'thin' 
+    ? ' thin-border'
+    : '';
 
 // Custom inner-wrapper ('container') classes
-const containerClasses = modalClasses+blankSlate+border;
+const containerClasses = modalClasses+removeStyles+borderStyle;
 
 
 // Setting 'blur' to true will blur the background behind the modal.
-blur = blur ? ' blur-background' : '';
+const blurBkg = blur ? ' blur-background' : '';
 
 // Close function so that multiple events can happen on closing the modal.
 const close = () => {
-setActivate(!activate);
+  setActivate(!activate);
 }
 
 // Close button element to be used if no close button is added to the component.
 // Setting 'closeButton' to false will completely remove this feature and the
 // modal will only close if the user selects an area outside the modal component.
 const CloseButton = () => {
-return (
-  <div className="modal-close_container disable-highlight">
-    <div role="button" onClick={ () => close() } className="modal-close" id="modal-close" aria-label="Close">&times;</div>
-  </div>
-)
+  return (
+    <div className="modal-close_container disable-highlight">
+      <div role="button" onClick={ () => close() } className="modal-close" id="modal-close" aria-label="Close">&times;</div>
+    </div>
+  )
 }
 
 // This class is used when a title is added to push the children down 70px to
 // compensate for the space added when the title is used.
 const titlePush = title ? ' modal-title_push' : ' no-title';
 
-// Add additional Title classes
-titleClasses = titleClasses ? ' '+titleClasses : '';
-
 // Modal settings
 const settings = {
   id: id ? '-'+id : null,
-  outerClasses: "modal-outer darken-content"+blur+active,
+  outerClasses: "modal-outer darken-content"+blurBkg+active,
   outerStyle: {},
   wrapStyle: {},
-  containerClasses: "modal-container"+containerClasses+scroll,
+  containerClasses: "modal-container"+containerClasses+scrollable,
   innerStyle: {},
-  titleClasses: "modal-title"+titleClasses+border,
-  contentClasses: "modal-content"+titlePush+addSpace,
+  titleClasses: "modal-title"+titleClasses+borderStyle,
+  contentClasses: "modal-content"+titlePush+spacing,
 }
 
-return (
-<>{activate ? <>
-  <div className={settings.outerClasses+size} onClick={() => close()}>
-  </div>
-  <div className="modal-wrapper"
-    aria-hidden={activate ? false : true}
-    data-modal-open={activate ? true : false}
-    id={"modal"+id}>
-    { closeButton ? closeButton : closeButton === false ? <></> : <CloseButton /> }
-    <div className={settings.containerClasses+size} id="modal-container">
-      <div className={settings.contentClasses}>
-        { title ?
-          <header className={settings.titleClasses}>
-            { title }
-          </header> : <></> }
-        { children ?
-          <div className={'modal-children'}>
-            { children }
-          </div> : <></> }
+return (<>
+  {activate ? <>
+    <div className={settings.outerClasses+size} onClick={() => close()}>
+    </div>
+    <div className="modal-wrapper"
+      onClick={(e) => e.stopPropagation()}
+      aria-hidden={activate ? false : true}
+      data-modal-open={activate ? true : false}
+      id={"modal"+id}>
+      { closeButton ? closeButton : closeButton === undefined ? <></> : <CloseButton /> }
+      <div className={settings.containerClasses+size} id="modal-container">
+        <div className={settings.contentClasses}>
+          { title ?
+            <header className={settings.titleClasses}>
+              { title }
+            </header> : <></> }
+          { children ?
+            <div className={'modal-children'}>
+              { children }
+            </div> : <></> }
+        </div>
       </div>
     </div>
-  </div>
-</>:<></>}
+  </>:<></>}
 </>)
 }
 

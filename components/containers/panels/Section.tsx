@@ -24,7 +24,7 @@ const Section = (
     content.length === 2 ? "s6" :
     content.length === 3 ? "s4" :
     content.length === 4 ? "s3" :
-    null;
+    "";
 
   const wrapper = styles.wrapper+row;
 

@@ -1,7 +1,14 @@
 //  https://react-glider.vercel.app/
+import { FC, ReactNode } from 'react';
 import styles from './glider.module.css';
 
-const GliderPanel = ({ children, perspective }) => {
+interface Props {
+  children: ReactNode;
+  onClick: () => any;
+  perspective?: boolean;
+}
+
+const GliderPanel: FC<Props> = ({ children, onClick, perspective }) => {
 
   const Slide = () => {
     return (
@@ -13,7 +20,7 @@ const GliderPanel = ({ children, perspective }) => {
 
   const SlideOuter = () => {
     return (
-      <div className={styles.slide+" "+styles.outer+" slide-outer"}>
+      <div onClick={onClick} className={styles.slide+" "+styles.outer+" slide-outer"}>
         { children }
       </div>
     )

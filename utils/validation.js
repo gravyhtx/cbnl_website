@@ -333,7 +333,8 @@ export const validatePassword = (password, reEnterPassword, passwordMatch, compl
   // 6 to 20 characters with at least one numeric digit, one uppercase an one lowercase letter
   const pwFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
   // Special characters
-  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  // !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"|,.<>?\/\\~]/;
   
   let errors = [];
   let successMessage = "Password is valid!";

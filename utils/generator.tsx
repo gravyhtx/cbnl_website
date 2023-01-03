@@ -122,6 +122,32 @@ export const gaussRound = (num: number, decimalPlaces?: number) => {
   return d ? r / m : r;
 }
 
+// GET SUM OF VALUES IN AN ARRAY
+export const sum = (array: number[]) => {
+  let output = 0;
+  for(let i=0; i < array.length; i++) {
+    output += array[i]
+  }
+  return output;
+}
+
+// GET AVERAGE OF VALUE
+export const avgerage = (array: number[]) => {
+  return sum(array) / array.length;
+};
+
+// GET RATIOS
+export const ratios = (array: number[]) => {
+  const total = sum(array);
+  const avg = (n: number) => (n / total) * 100;
+
+  let output = [];
+  for(let i=0; i < array.length; i++) {
+    output.push(avg(array[i]));
+  }
+  return output;
+}
+
 
 /////////////
 // STRINGS //
@@ -532,7 +558,7 @@ export const splitArray = (
 }
 
 // RETURN ONE ITEM (or set/object) FROM AN ARRAY or ARRAY OF ARRAYS
-export const select = (el: any[]) => {
+export const select = (el: string | any[]) => {
   const output = el[randomize(el.length)];
   return output[randomize(output.length)] ? output[randomize(output.length)] : el[randomize(el.length)];
 };
@@ -656,6 +682,30 @@ export const reduceBy = (
   );
 }
 
+
+// GROUP AN ARRAY OF OBJECTS BY KEY
+export const groupBy = (obj: object[], key: string) => {
+// Example:
+//   const arr = [ {id: 1, name: 'Alice', group: 'A'}, {id: 2, name: 'Bob', group: 'B'},
+//                 {id: 3, name: 'Charlie', group: 'A'}, {id: 4, name: 'Dave', group: 'B'}, ];
+//
+//  groupBy(arr, 'group');
+//
+// Output:
+//  { A: [id: 1, name: 'Alice', group: 'A'},{...}],
+//    B: [{...}, {...},], }
+  return obj.reduce((acc, curr) => {
+    const keyVal = curr[key];
+    if (!acc[keyVal]) {
+      acc[keyVal] = [];
+    }
+    acc[keyVal].push(curr);
+    return acc;
+  }, {});
+};
+
+
+// GENERATE SOME GOOD OL LOREM IPSUM
 export const lorem = () => {
   const ipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                 sed do eiusmod tempor incididunt ut labore et dolore magna

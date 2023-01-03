@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-interface Navigator {
-  onLine: any;
-  maxTouchPoints: any;
-  connection: { effectiveType: any };
-  mozConnection: { effectiveType: any };
-  webkitConnection: { effectiveType: any };
-  webkitTemporaryStorage: { queryUsageAndQuota: any };
-}
+// interface Navigator {
+//   onLine: any;
+//   maxTouchPoints: any;
+//   connection: { effectiveType: any };
+//   mozConnection: { effectiveType: any };
+//   webkitConnection: { effectiveType: any };
+//   webkitTemporaryStorage: { queryUsageAndQuota: any };
+// }
 
 export const googCheck = async () => {
   try {
@@ -94,11 +95,19 @@ export const deviceMediaCapability = (
 
 export const useDevice = () => {
 
-  const nav: any = navigator;
-  const online: boolean = navigator.onLine ? true : false;
+  const [navInfo, setNavInfo] = useState<any>({});
 
-  const touchDevice: number = navigator.maxTouchPoints;
-  const hasCamera: boolean = 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices ? true : false;
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.navigator) {
+      setNavInfo(window.navigator);
+    }
+  }, []);
+
+  const nav: any = navInfo;
+  const online: boolean = nav.onLine ? true : false;
+
+  const touchDevice: number = nav.maxTouchPoints;
+  const hasCamera: boolean = 'mediaDevices' in nav && 'getUserMedia' in nav.mediaDevices ? true : false;
 
   const wifiConnection = () => {
     if(online && nav.product.toLowerCase() !== "gecko") {
@@ -128,7 +137,7 @@ export const useDevice = () => {
       points: touchDevice
     },
     haptics: useVibrate,
-    preferredLanuage: navigator.language,
+    preferredLanuage: nav.language,
     hasCamera: hasCamera,
     connectedDevices: nav.hid,
     isMobile: isMobile,

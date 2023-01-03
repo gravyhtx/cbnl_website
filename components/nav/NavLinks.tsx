@@ -2,10 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
 
-import { navlinks } from "../../config/theme";
-
-import Leaf from '../../public/images/icons/site/svg/leaf_icon.svg';
-import SvgElement from "../elements/SvgElement";
+import { navlinks } from "../../config/theme.config";
 
 import * as Unicons from '@iconscout/react-unicons';
 

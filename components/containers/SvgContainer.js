@@ -49,7 +49,7 @@ export const SvgImg =
 
 // SVG ICON
 // Container for SVG icons
-export const SvgIcon = ({ svg, classes, link, onClick, linkClasses, target }) => {
+export const SvgIconContainer = ({ svg, classes, link, onClick, linkClasses, target }) => {
   // Check imported as Next image -- Next uses 'image.src' to get the location
   const data = svg.src ? svg : { src: svg };
   const dataSrc = data.src;
@@ -195,6 +195,7 @@ export const SvgContainer = ({ margins, src, link, color, width, description, co
 
   if(src && src.src){ path = src.src }
   else { path = src }
+  console.log(src)
 
   return (
     <Link href={link?link:'/'} target="_self" rel="noreferrer">

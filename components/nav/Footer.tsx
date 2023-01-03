@@ -44,8 +44,14 @@ const Footer = (
   }
 
   const ContactSection = (): any => {
-    const phoneEl = <Contact element={'phone'} useIcon={true} classes={[styles.element,styles.icon]} />
-    const emailEl = <Contact element={'email'} useIcon={true} classes={[styles.element,styles.icon]} />
+    const phoneEl = <Contact isMobile={isMobile}
+      element={'phone'}
+      useIcon={true}
+      classes={[styles.element,styles.icon]} />
+    const emailEl = <Contact isMobile={isMobile}
+      element={'email'}
+      useIcon={true}
+      classes={[styles.element,styles.icon]} />
 
     const contact = {
       title: 'Contact Us',

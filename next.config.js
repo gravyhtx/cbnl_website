@@ -1,17 +1,27 @@
 const withPlugins = require('next-compose-plugins');
 const withBundleAnalyzer = require('@next/bundle-analyzer');
-const { withPlaiceholder } = require("@plaiceholder/next");
+// const { withPlaiceholder } = require("@plaiceholder/next");
+const dotenv = require('dotenv');
+dotenv.config({
+  path: '.env.local',
+});
 
 const bundleAnalyzer = withBundleAnalyzer({enabled: process.env.ANALYZE === 'true'})
 
 const devMode = process.env.NODE_ENV === 'development' ? true : false;
 
+
 const nextConfig = {
   reactStrictMode: true,
   env: {
+    COMPANY_PHONE: process.env.COMPANY_PHONE,
+    COMPANY_EMAIL: process.env.COMPANY_EMAIL,
     CRYPTO_SECRET_KEY: process.env.CRYPTO_SECRET_KEY,
     CRYPTO_SECRET_IV: process.env.CRYPTO_SECRET_IV,
     QRNG_API_KEY: process.env.QRNG_API_KEY,
+    JWT_SECRET: process.env.JWT_SECRET,
+    RANDOM_ORG_API_KEY: process.env.RANDOM_ORG_API_KEY,
+    RANDOM_ORG_HAPI_KEY: process.env.RANDOM_ORG_HAPI_KEY,
   },
   swcMinify: true,
   compiler: {
@@ -27,6 +37,12 @@ const nextConfig = {
   },
   webpack(config, options) {
     const { isServer } = options;
+    if (!isServer) {
+      // don't resolve 'fs' module on the client to prevent this error on build --> Error: Can't resolve 'fs'
+      config.resolve.fallback = {
+          fs: false
+      }
+    }
     config.module.rules.push({
       test: /\.(ogg|mp3|wav|mpe?g)$/i,
       exclude: config.exclude,

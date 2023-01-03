@@ -2,27 +2,28 @@ import React, { FC, Suspense, useEffect } from 'react';
 
 import * as Unicons from '@iconscout/react-unicons';
 
-import { useDevice } from '../../hooks/useDevice';
-
-import website from '../../config/site-data.json';
-
 interface Props {
   element: 'email' | 'phone' | undefined,
+  isMobile?: boolean;
   useIcon?: boolean,
   classes?: string[],
 }
 
-const Contact: FC<Props> = ({ element, useIcon, classes = [] }) => {
+const Contact: FC<Props> = ({ element, isMobile, useIcon, classes = [] }) => {
 
-  const isMobile = useDevice().isMobile;
+  isMobile = isMobile ? isMobile : false;
 
   const icon = [<Unicons.UilMobileAndroidAlt />, <Unicons.UilEnvelope />]
-  const email = process.env.COMPANY_EMAIL ? process.env.COMPANY_EMAIL : website.email ? website.email : undefined;
-  const phone = process.env.COMPANY_PHONE ? process.env.COMPANY_PHONE : website.phone ? website.phone : undefined;
+  const email = process.env.COMPANY_EMAIL ? process.env.COMPANY_EMAIL : undefined;
+  const phone = process.env.COMPANY_PHONE ? process.env.COMPANY_PHONE : undefined;
 
   const ctc = {
     phone: [icon[0],phone],
     email: [icon[1],email]
+  }
+
+  if((element === 'email' && email === undefined) || (element === 'phone' && phone === undefined)) {
+    return <></>;
   }
 
   const loading = element === 'email' ? 'loading...' : element === 'phone' ? 'loading...' : 'loading...';

@@ -1,10 +1,16 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
-
 // https://upmostly.com/tutorials/how-to-use-react-hooks-to-fetch-data
+
+type UseFetchDataState = {
+  loading: boolean;
+  data: any;
+  error: any;
+};
+
 const useFetchData = (
-  requestConfig, // Axios request config
-) => {
+  requestConfig: AxiosRequestConfig, // Axios request config
+): UseFetchDataState => {
   const localRequestConfig = requestConfig || {};
   const [state, setState] = useState({
     loading: true,
@@ -42,8 +48,9 @@ const useFetchData = (
         error: new Error('No URL provided!'),
       }));
     }
-    return state;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestConfig]);
+  return state;
 };
+
 export default useFetchData;

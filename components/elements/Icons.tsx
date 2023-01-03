@@ -1,4 +1,3 @@
-import { NxtLink } from "./NextElements";
 import { checkType, checkTypeof, fileName, unFileName } from "../../utils/validation";
 import { MouseEvent, ReactElement } from "react";
 import Link from "next/link";
@@ -6,9 +5,12 @@ import Link from "next/link";
 import * as Unicons from '@iconscout/react-unicons';
 import { capitalize } from "../../utils/generator";
 
-export const MiCon = (
-  name: string,
-  icon?: string,
+import 'material-icons/iconfont/material-icons.css';
+
+
+interface MiProps {
+  icon: string,
+  name?: string,
   classes?: string,
   url?: string,
   useButton?: boolean,
@@ -16,12 +18,16 @@ export const MiCon = (
   linkClasses?: string,
   alt?: string,
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void,
-) => {
+}
+
+export const MiCon = (props: MiProps) => {
+
+  let {icon, name, classes, url, useButton, navColsTotal, linkClasses, alt, onClick} = props;
 
   linkClasses = linkClasses ? linkClasses : null;
   useButton = useButton === true ? true : false;
   navColsTotal = navColsTotal ? navColsTotal : false;
-  alt = !alt && name ? unFileName(name) : alt ? alt : 'Site Icon';
+  alt = !alt && name ? name : alt ? alt : 'Site Icon';
 
   if(navColsTotal && !checkType(navColsTotal, 'number')) {
     console.warn(
@@ -64,7 +70,7 @@ const iconLink = url === 'void' || url === 'js' || url === '#' || url === 'javas
 }
 
 
-export const HelpIcon = (
+export const SvgIcon = (
   name: 'help' | undefined,
 ) => {
   const Path = () => {

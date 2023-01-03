@@ -1,9 +1,18 @@
+import { FC, ReactElement, ReactNode } from "react";
 import useWindowSize from "../../hooks/useWindowSize";
 import NavLinks from "./NavLinks";
 
 import styles from './styles/sidenav.module.css';
 
-const SideNav = ({ position, header, activate, setActivate, blur }) => {
+interface Props {
+  activate: boolean;
+  setActivate: (activate: boolean) => void;
+  position?: 'right' | 'left';
+  header?: ReactElement;
+  blur?: boolean;
+}
+
+const SideNav: FC<Props> = ({ position, header, activate, setActivate, blur }) => {
 
   // Automatically position to left side
   position = position === 'right' ? position = 'right' : position = 'left';
@@ -24,14 +33,14 @@ const SideNav = ({ position, header, activate, setActivate, blur }) => {
 
   // CLASSES
   // Setting 'blur' to true will blur the background behind the modal.
-  blur = blur ? ' blur-background' : '';
+  const blurBkg = blur ? ' blur-background' : '';
   // Add active class when open
   let active = activate ? ' active ' : ' ';
   // Position wrapper
   const loc = position === 'right' ? styles.right : styles.left;
 
   const cls = {
-    aside: styles.sidenav+blur,
+    aside: styles.sidenav+blurBkg,
     outer: styles.outer + ' darken-content',
     wrapr: styles.wrapper+active+loc,
     cntnr: header?styles.headernav+' '+styles.container:styles.container,

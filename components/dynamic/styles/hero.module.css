@@ -68,7 +68,7 @@
 }
 
 .logoContainer {
-  position: absolute;
+  position: initial;
   z-index: 999;
   padding: 20px 25px;
   animation: logoFadeIn 2s forwards linear;
