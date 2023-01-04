@@ -49,6 +49,10 @@
   margin-right: 10px;
 }
 
+.contactItem div {
+  text-align: center;
+}
+
 .contactItem div a {
   cursor: pointer;
   line-height: 1;
@@ -60,25 +64,50 @@
   align-items: center;
 }
 
-.contactItem div {
-  text-align: center;
-}
-
 .socials {
   margin: 0 auto;
   padding: 40px 10px 0;
   display: flex;
   align-content: center;
   justify-content: space-evenly;
+  flex-direction: row;
 }
 
 .socials .icon {
   width: 50px;
+  transition: 2s all;
+  filter: drop-shadow(0px 0px 0 white);
+}
+.socials .icon:hover {
+  width: 50px;
+  transition: 2s all;
+  filter: drop-shadow(1px 1px 5px rgb(0,0,0,.2));
 }
 
 .socials .icon svg {
   filter: invert(1);
   cursor: pointer;
+}
+
+.links {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: center;
+}
+
+.links ul {
+  padding-right: 50px;
+  font-weight: 200;
+}
+
+.links ul a {
+  filter: drop-shadow(0px 0px 0 white);
+  font-size: 1.6rem;
+  transition: 2s all;
+}
+.links ul a:hover {
+  filter: drop-shadow(1px 1px 0 white);
+  transition: 2s all;
 }
 
 .info {
@@ -89,7 +118,8 @@
 }
 
 .info .copyright {
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 400;
   text-shadow: 2px 2px 1px var(--green-5);
   /* font-style: italic; */
 }
@@ -115,4 +145,34 @@
 
 .info .designer a:hover {
   cursor: help;
+}
+
+@media only screen and (min-width: 992px) {
+  .about {
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .about {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper h2 {
+    font-size: 2.5rem;
+  }
+  .wrapper .container {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  .contactItem {
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .contactItem {
+    font-size: 1.25rem;
+  }
 }

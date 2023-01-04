@@ -8,9 +8,13 @@ import '../styles/fonts.css';
 import '../styles/globals.css';
 import '../styles/glider.css';
 
-const poppins = Poppins({ weight:'400' });
+const poppins = Poppins({
+  weight:['100','200','300','400','500','600','700','800',] 
+});
 
-const code = JetBrains_Mono({ weight:'300' })
+const code = JetBrains_Mono({
+  weight:['100','200','300','400','500','600','700','800',]
+})
 
 
 function App({ Component, pageProps }) {
@@ -22,7 +26,6 @@ function App({ Component, pageProps }) {
       }
       code {
         font-family: ${code.style.fontFamily}, Courier New, Courier, monospace;
-      }
     `}</style>
     <Component {...pageProps} />
   </React.StrictMode>

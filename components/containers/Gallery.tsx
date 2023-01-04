@@ -11,10 +11,11 @@ import { gallerySlides } from '../../config/site-images.config';
 
 import styles from './styles/gallery.module.css';
 
-const Gallery = ({ imgObjArray }) => {
+const Gallery = ({ header, classes, imgObjArray }) => {
   // Get window width
   const winsize = useWindowSize();
   const width = winsize.width;
+  classes=classes?" "+classes: ";"
 
   const Slides = () => {
     const arr = imgObjArray ? imgObjArray : gallerySlides();
@@ -48,16 +49,16 @@ const Gallery = ({ imgObjArray }) => {
   }
 
   const slidesToShow = width > 1400
-      ? 1.75
-    : width <= 1400 && width > 1024
       ? 1.5
+    : width <= 1400 && width > 1024
+      ? 1.3
     : width <= 1024 && width > 768
       ? 1.2
       : 1
 
   return (
-    <section className={styles.container} id="gallery">
-      <h2>GALLERY</h2>
+    <section className={styles.container+classes} id="gallery">
+      {header?header:<h2>GALLERY</h2>}
       <Glider hasDots={true} slidesToShow={slidesToShow}>
         <Slides />
       </Glider>  

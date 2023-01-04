@@ -273,6 +273,12 @@ export default function Home() {
     )
   }
 
+  const galleryHeader = <>
+    <div className={styles.galleryHeader}>
+      <h2>GALLERY</h2>
+    </div>
+  </>
+
   return (<>
     <DefaultLayout title={title} swipeNav={false}>
       <About />
@@ -280,7 +286,9 @@ export default function Home() {
       <Projects />
       <CallUs />
       <Nursery />
-      <Gallery />
+      <Gallery
+      classes={styles.gallery}
+        header={ galleryHeader } />
       <Verified />
     </DefaultLayout>
   </>)

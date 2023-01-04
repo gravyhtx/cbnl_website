@@ -23,7 +23,7 @@
 
 .about hgroup h1 {
   line-height: 1;
-  margin: 0 auto -40px;
+  margin: 0 auto -10px;
   color: var(--green-5);
   font-weight: 700;
 }
@@ -68,7 +68,7 @@
   margin: 10px 0 25px;
   color: #fff;
   font-size: 4rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 /* .services h1 span {
@@ -150,13 +150,13 @@
 .callUs h2 {
   margin: 0;
   font-size: 6rem;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--green-4);
   text-shadow: 2px 2px 0px white;
 }
 .callUs .tel {
   font-size: 6.5rem;
-  font-weight: 800;
+  font-weight: 700;
   color: #453c32;
   text-shadow: 2px 2px 0px white;
 }
@@ -175,7 +175,7 @@
   padding-bottom: 40px;
   color: #fff;
   font-size: 4rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .nursery .details {
@@ -193,14 +193,14 @@
 /* GALLERY */
 .gallery {
   position: relative;
-  height: 80vh;
-  padding: 0 60px;
+  /* height: 80vh; */
+  /* padding: 0 60px; */
 }
 
 .gallery h2 {
   font-size: 5rem;
-  font-weight: 700;
-  padding: 20px 0;
+  font-weight: 600;
+  /* padding: 20px 0; */
 }
 
 .gallery .imgContainer {
@@ -266,16 +266,34 @@
   }
 }
 
-@media only screen and (max-width: 862px) {
+@media only screen and (max-width: 992px) {
   .services h2 {
     margin: 20px auto 50px;
   }
   .services .container ul {
     padding-bottom: 50px;
   }
+  .callUs h2 {
+    font-size: 5.5rem;
+  }
+  .callUs .tel {
+    font-size: 5.8rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
+  .about hgroup {
+    margin-bottom: 40px;
+  }
+  
+  .about hgroup h1 {
+    font-size: 3rem;
+    margin: 0 auto 0px;
+  }
+  
+  .about hgroup h2 {
+    font-size: 2.5rem;
+  }
   .projects {
     padding: 60px 0;
   }
@@ -289,16 +307,20 @@
     padding: 0 10px;
   }
   .callUs h2 {
-    font-size: 5rem;
+    font-size: 4.33rem;
   }
   .callUs .tel {
-    font-size: 4rem;
+    font-size: 4.33rem;
   }
 }
 
 @media only screen and (max-width: 576px) {
+  .callUs .container {
+    height: 150px
+  }
   .callUs h2 {
-    font-size: 4rem;
+    font-size: 3rem;
+    font-size: 800;
     padding-bottom: 10px;
   }
   .callUs .tel {

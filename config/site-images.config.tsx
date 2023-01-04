@@ -4,7 +4,7 @@ import hero3 from '../public/images/hero/hero-slide2.png';
 import hero4 from '../public/images/hero/hero-slide3.png';
 
 import img1 from '../public/images/slides/img1.png';
-import img2 from '../public/images/slides/img1.png';
+import img2 from '../public/images/slides/img2.png';
 import img3 from '../public/images/slides/img3.png';
 import img4 from '../public/images/slides/img4.png';
 import img5 from '../public/images/slides/img5.png';

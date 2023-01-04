@@ -74,18 +74,16 @@ a.navlink {
 .link.bottom a.navlink {
   cursor: pointer;
   padding-left: 0;
-  font-size: 1.6rem;
   color: var(--green-1);
   text-shadow: 0 0 none;
-  transition: 1s text-shadow;
+  transition: 2s all;
 }
 
 .link.bottom a.navlink:hover {
   padding-left: 0;
-  font-size: 1.6rem;
   color: white;
-  text-shadow: 0 0 15px #aaa;
-  transition: 1s text-shadow;
+  text-shadow: 0 0 12px #888;
+  transition: 2s all;
 }
 
 /* HOVER ICON */

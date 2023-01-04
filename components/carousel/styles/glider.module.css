@@ -1,0 +1,68 @@
+.wrapper {
+  display: block;
+  margin: 0 auto;
+}
+
+.wrapper.perspective {}
+
+.container {
+  overflow-y: hidden;
+  border: 3px solid white;
+}
+
+.slide {
+  user-select: none;
+  justify-content: center;
+  align-content: center;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container.responsive {
+    height: 67vh;
+    transition-delay: 1500ms;
+    transition-property: height;
+    transition: all 1s;
+  }
+  .container.responsive:hover {
+    height: 85vh;
+    width: 100%;
+    transition-delay: 1500ms;
+    transition-property: height;
+    transition: all 1s;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .container.responsive {
+    height: 45vh;
+    width: 80%;
+    transition-delay: 1500ms;
+    transition-property: height;
+    transition: all 1s;
+  }
+  .container.responsive:hover {
+    height: 50vh;
+    width: 100%;
+    transition-delay: 1500ms;
+    transition-property: height;
+    transition: all 1s;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container.responsive {
+    height: 40vh;
+    width: 90%;
+  }
+  .container.responsive:hover {
+    height: 50vh;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .container.responsive {
+    height: 40vh;
+  }
+  .container.responsive:hover {
+    height: 40vh;
+  }
+}

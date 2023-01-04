@@ -1,6 +1,6 @@
 //  https://react-glider.vercel.app/
 import { FC, ReactNode } from 'react';
-import styles from './glider.module.css';
+import styles from './styles/glider.module.css';
 
 interface Props {
   children: ReactNode;

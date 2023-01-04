@@ -46,23 +46,23 @@ const Footer = (
   const ContactSection = (): any => {
     const phoneEl = <Contact isMobile={isMobile}
       element={'phone'}
-      useIcon={true}
+      useIcon={false}
       classes={[styles.element,styles.icon]} />
     const emailEl = <Contact isMobile={isMobile}
       element={'email'}
-      useIcon={true}
+      useIcon={false}
       classes={[styles.element,styles.icon]} />
 
     const contact = {
       title: 'Contact Us',
       content: {
         phone: {
-          icon: null,
-          element: <>{phoneEl}</>,
+          icon: <Unicons.UilMobileAndroidAlt />,
+          element: <div>{phoneEl}</div>,
         },
         email: {
-          icon: null,
-          element: <>{emailEl}</>,
+          icon: <Unicons.UilEnvelope />,
+          element: <div>{emailEl}</div>,
         },
         address: {
           icon: <Unicons.UilLocationPoint />,
@@ -91,9 +91,11 @@ const Footer = (
           <h2>{contact.title.toUpperCase()}</h2>
           <div className={styles.contact}>
             <div className={phoneClasses}>
+              <div><span className={styles.icon}>{phone.icon}</span></div>
               <div><span className={styles.element}>{phone.element}</span></div>
             </div>
             <div className={styles.contactItem}>
+              <div><span className={styles.icon}>{email.icon}</span></div>
               <div><span className={styles.element}>{email.element}</span></div>
             </div>
             <div className={styles.contactItem} onClick={()=> window.open(addressLink, "_blank")}>

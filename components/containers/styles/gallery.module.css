@@ -7,7 +7,7 @@
 .container h2 {
   font-size: 5rem;
   font-weight: 700;
-  padding: 50px 20px;
+  padding: 80px 20px 50px;
   margin: 0 auto;
 }
 
@@ -23,7 +23,15 @@
 
 @media only screen and (min-width: 1024px) {
   .container {
-    height: 100vh;
+    height: 120vh;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .container h2 {
+    font-size: 5rem;
+    font-weight: 700;
+    padding: 40px 20px 20px;
+    margin: 0 auto;
   }
 }
 

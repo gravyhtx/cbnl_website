@@ -1,7 +1,7 @@
 // https://react-glider.vercel.app/
 import ReactGlider from 'react-glider';
 
-import styles from './glider.module.css';
+import styles from './styles/glider.module.css';
 
 const Glider = ({ children, wrapperClasses, hasDots, hasArrows, perspective, draggable, responsiveHeight,
   exactWidth, itemWidth, scrollLock, slidesToShow, slidesToScroll, contain }) => {

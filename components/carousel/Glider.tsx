@@ -3,7 +3,7 @@
 import { useCallback, useRef, useEffect, FC, ReactNode } from "react";
 import ReactGlider from 'react-glider';
 
-import styles from './glider.module.css';
+import styles from './styles/glider.module.css';
 
 interface Props {
   children?: ReactNode | undefined,
