@@ -1,4 +1,4 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 import DefaultLayout from '../templates/DefaultLayout';
 import { MiCon, SvgIcon } from '../components/elements/Icons';
@@ -327,6 +327,13 @@ const Images = () => {
 
   console.log(test)
   console.log(performance.now())
+  
+  useEffect(() => {
+      window.onscroll = function (e) {  
+        console.log(true)
+        // called when the window is scrolled.  
+    }
+  } )
 
   const FilteredImage = ({ imageUrl, filterType, filterValues }) => {
 

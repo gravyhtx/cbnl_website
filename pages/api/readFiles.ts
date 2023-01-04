@@ -2,16 +2,17 @@ import fs from 'fs';
 import path from 'path';
 
 const readFiles = (dirPath: string) => {
-  // Resolve the full directory path
-  const dir = path.resolve('./public', dirPath);
+  // // Resolve the full directory path
+  // const dir = path.resolve('./public', dirPath);
 
-  // Get a list of filenames in the directory
-  const filenames = fs.readdirSync(dir);
+  // // Get a list of filenames in the directory
+  // const filenames = fs.readdirSync(dir);
 
-  // Map the filenames to image paths
-  const images = filenames.map((name) => path.join('/', dirPath, name));
+  // // Map the filenames to image paths
+  // const images = filenames.map((name) => path.join('/', dirPath, name));
 
-  return images;
+  // return images;
+  return dirPath;
 };
 
 export default (req, res) => {
