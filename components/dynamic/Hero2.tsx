@@ -1,4 +1,4 @@
-import { useEffect, useRef, cloneElement, RefObject, useState, MutableRefObject } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 
 // SLIDES
@@ -6,11 +6,12 @@ import hero0 from '../../public/images/hero/hero-slide0.png';
 import hero1 from '../../public/images/hero/hero-slide1.png';
 import hero2 from '../../public/images/hero/hero-slide2.png';
 import hero3 from '../../public/images/hero/hero-slide3.png';
-import { heroSlides } from '../../config/site-images.config';
+// import { heroSlides } from '../../config/site-images.config';
 
 import styles from './styles/hero.module.css';
+import { numberClamp } from '../../utils/generator';
 
-const Hero = () => {
+function Hero(){
   const homeSlides = [hero0, hero1, hero2, hero3];
   const duration = 24000; // duration for each slide in milliseconds
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -42,23 +43,23 @@ const Hero = () => {
       const start = performance.now(); //https://developer.mozilla.org/en-US/docs/Web/API/Performance/now
 
       const fadeIn = (elapsed: number) => {
-        slide.style.opacity = (elapsed / 1000).toString();
-        slide.style.filter = `blur(${20 - (elapsed / 1000) * 20}px)`;
+        slide.style.opacity = numberClamp((elapsed / 1000 / 2),0,1).toFixed(3).toString();
+        slide.style.filter = `blur(${numberClamp((20 - (elapsed / 1000) * 20),0,20).toFixed(3)}px)`;
         if (elapsed < 2000) {
           requestAnimationFrame((time) => fadeIn(time - start));
         }
       };
 
       const grow = (elapsed: number) => {
-        slide.style.transform = `scale(${100 + (elapsed / 1000) * 5}%)`;
+        slide.style.transform = `scale(${(100 + (elapsed / 1000) * 1.05).toFixed(4)}%)`;
         if (elapsed < 20000) {
           requestAnimationFrame((time) => grow(time - start));
         }
       };
 
       const fadeOut = (elapsed: number) => {
-        slide.style.opacity = ((24000 - elapsed) / 1000).toString();
-        slide.style.filter = `blur(${(elapsed / 1000) * 20}px)`;
+        slide.style.opacity = ((24000 - elapsed) / 1000).toFixed(3).toString();
+        slide.style.filter = `blur(${((elapsed / 1000) * 20).toFixed(3)}px)`;
         if (elapsed < 24000) {
           requestAnimationFrame((time) => fadeOut(time - start));
         }
@@ -70,13 +71,12 @@ const Hero = () => {
     }, [visible]);
 
     return (
-      <div ref={slideRef}>
+      <div className={styles.container} ref={slideRef}>
         <Image
           className={styles.slide}
           src={img.src}
           alt={`Hero Image ${index + 1}`}
           sizes="100vw"
-          placeholder="blur"
           quality={80}
           fill={true}
         />
@@ -86,16 +86,16 @@ const Hero = () => {
 
   // slides is an array of JSX elements representing each slide
   const slides = homeSlides.map((img: any, index: number) => {
-    return <HeroImage img={img.src} index={index} key={index} />
+    return <HeroImage img={img} index={index} key={index} />
   });
   
   return (
     <div className={styles.hero}>
       <div className={styles.slides}>
-        {slides}
+        {slides[currentSlide]}
       </div>
     </div>
   );
 }
 
-export default Hero;
+export const MemoizedHero = memo(Hero);

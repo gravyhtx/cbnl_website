@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import SideNav from '../components/nav/SideNav';
 import SideNavTrigger from '../components/nav/SideNavTrigger';
 import { HomepageHero } from '../components/dynamic/Hero';
+import { Hero } from '../components/dynamic/Hero2';
 import { HomeHeader, BrandHeader, MobileHeader } from '../components/nav/Header';
 import BrandOverlay from '../components/dynamic/BrandOverlay';
 import Footer from '../components/nav/Footer';
@@ -92,20 +93,11 @@ const DefaultLayout = ({
     }</>
 
   const Header = () => {
-    const HomeHero = () => {
-      return (<>
-        {isHome === true
-        ? <>
-            <HomepageHero />
-          </>
-        : <></>}
-      </>)
-    }
     return (
       <div>
         <hgroup className={styles.header}>
           <MobileHeader />
-          { isHome === true ? <HomeHero /> : <></> }
+          { isHome === true ? <HomepageHero /> : <></> }
           { useHeader && isHome === true ? <HomeHeader /> : useHeader && isHome === false ? <></> : <></>}
           {/* { useHeader && isHome === true ? <HomeHeader /> : useHeader && isHome === false ? <BrandHeader /> : <></>} */}
           { hero && isHome === false ? hero : <></> }

@@ -46,7 +46,7 @@ const heroSlide = (
       }
     }, 1000);
     return () => clearInterval(time);
-  }, [timer, imgIndex, fadeOut]);
+  }, [timer, imgIndex]);
 
   const fade = fadeOut === true ? styles.out : styles.in;
 
@@ -116,7 +116,6 @@ export const HomepageHero = () => {
     </div>
   )
 }
-
 
 // export const HeroSlider = () => {
 //   const opts = {

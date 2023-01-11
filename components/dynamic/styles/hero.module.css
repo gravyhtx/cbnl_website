@@ -57,6 +57,16 @@
   animation: heroFadeOut 2s both ease-in-out;
 }
 
+.hero {
+  height: 100vh;
+}
+
+.hero .slides .container {
+  opacity: 0;
+  position: relative;
+  height: 100vh;
+}
+
 .homepageHero .container {
   position: absolute;
 }

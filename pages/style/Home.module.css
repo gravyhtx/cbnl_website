@@ -13,7 +13,7 @@
 
 .about {
   margin: 0 auto;
-  max-width: 85vw;
+  max-width: 90vw;
   padding: 80px 0;
 }
 
@@ -203,8 +203,8 @@
   /* padding: 20px 0; */
 }
 
-.gallery .imgContainer {
-}
+/* .gallery .imgContainer {
+} */
 
 .gallery .imgContainer img {
   position: relative !important;
@@ -223,8 +223,8 @@
 }
 
 .verified .logoContainer {
-  height: 150px;
-  margin: 0 0px 50px 10px;
+  height: 180px;
+  margin: 0px 0px 60px 10px;
   position: relative;
 }
 
@@ -251,18 +251,18 @@
     padding: 90px 10px 100px;
   }
   .verified .logoContainer {
-    height: 250px;
-    margin: 0 0px 50px 10px;
+    height: 220px;
+    margin: 0px 0px 60px 0px;
   }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (max-width: 768px) {
   .verified {
-    padding: 90px 10px 100px;
+    padding: 70px 10px 80px;
   }
   .verified .logoContainer {
-    height: 200px;
-    margin: 0 0px 50px 10px;
+    height: 180px;
+    margin: 0px 0px 60px 10px;
   }
 }
 

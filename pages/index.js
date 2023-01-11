@@ -108,6 +108,49 @@ export default function Home() {
     }
   }
 
+  const lorem = () => {
+    const ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "+
+                  "sed do eiusmod tempor incididunt ut labore et dolore magna "+
+                  "aliqua. Ut enim ad minim veniam, quis nostrud exercitation "+
+                  "ullamco laboris nisi ut aliquip ex ea commodo consequat. "+
+                  "Duis aute irure dolor in reprehenderit in voluptate velit"+
+                  "esse cillum dolore eu fugiat nulla pariatur. Excepteur sint "+
+                  "occaecat cupidatat non proident, sunt in culpa qui officia "+
+                  "deserunt mollit anim id est laborum."
+    return ipsum
+  }
+
+  const charLimit = (len, string, opts) => {
+    // Trim string to chararcter limit
+    let trim = string.substr(0, len);
+
+    if(opts.completeWords === true) {
+      // If character is cut off in middle of word continue final word
+      trim = trim.substr(0, Math.min(trim.length, trim.lastIndexOf(" ")))
+    }
+    if(opts.ellipsis === true && len < string.length) {
+      trim = trim.endsWith('.') ? trim += '..' : trim += '...'
+    }
+    return trim;
+  }
+
+  const wordLimit = (len, string, opts) => {
+    const split = string.trim().split(' ');
+    const arr = split.slice(0, len);
+    console.log(split.length)
+    let output = arr.join(' ');
+    if(opts.ellipsis && len < split.length) {
+      return output.endsWith('.') ? output += '..' : output += '...';
+    }
+    return output;
+  }
+
+  const opts = {
+    ellipsis: true
+  }
+
+  console.log(wordLimit(70, lorem(), opts))
+
   const About = () => {
     const data = content.about;
 
@@ -284,7 +327,7 @@ export default function Home() {
       <About />
       <Services />
       <Projects />
-      <CallUs />
+      {/* <CallUs /> */}
       <Nursery />
       <Gallery
       classes={styles.gallery}
