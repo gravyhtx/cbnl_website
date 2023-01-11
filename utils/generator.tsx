@@ -1,49 +1,55 @@
-import { checkType, checkForWords, listOfWords } from "./validation";
+import { checkType, checkForWords, listOfWords, imageSizeObj } from "./validation";
 
-/////////////////////////////
-// SIMPLE NUMBER FUNCTIONS //
-/////////////////////////////
+//! =========================== !//
+//! | SIMPLE NUMBER FUNCTIONS | !//
+//! =========================== !//
 
-
-// RANDOMIZE SHORTCUT
+//* RANDOMIZE SHORTCUT
 export const randomize = (
-  n: number,
+  max: number,
+  min?: number
 ) => {
-	return Math.floor(Math.random() * n);
+  min = min ? min : 0;
+	return Math.floor(Math.random() * (max-min)) + min;
 }
 
-// HEADS... OR TAILS?
+//* HEADS... OR TAILS?
 export const cointoss = () => {
   let n: number = randomize(2);
   let bool: boolean = n === 0 ? true : false;
   return bool;
 };
 
-// RANDOMLY MAKE A NUMBER POSITIVE OR NEGATIVE
+//* RANDOMLY MAKE A NUMBER POSITIVE OR NEGATIVE
 export const posNeg = (n: number) => {
   return (n?n:1)*(Math.round(Math.random()) * 2 - 1)
 }
 
-// ROLL A RANDOM NUMBER -- ASSIGN IT WHEREVER YOU WANT ACROSS PAGES!
-export const luckyRoll = (n: number) => {
-  let output: number = randomize(n)+1;
-  localStorage.setItem("luckyNumber", output.toString());
-  return output;
+//* ROLL A RANDOM NUMBER -- ASSIGN IT WHEREVER YOU WANT ACROSS PAGES!
+//? Enter a number or 'set' to set a random number n local storage or 'get' to retrieve it
+export const luckyRoll = (n?: number | 'get' | 'set', id?: string) => {
+  id = id ? id : '';
+  if(n === 'get') {
+    return localStorage.getItem("luckyNumber"+id);
+  } else {
+    let output: number = randomize(Number(n === 'set' ? 100 : n))+1;
+    localStorage.setItem("luckyNumber"+id, output.toString());
+  }
 };
 
-// TRUNCATE TO DECIMAL PLACE
+//* TRUNCATE TO DECIMAL PLACE
 export const truncate = (num: number, decimalPlaces?: number) => {    
   var numPowerConverter = Math.pow(10, decimalPlaces || 1); 
   return ~~(num * numPowerConverter)/numPowerConverter;
 }
 
-// ROUND TO NEAREST SPECIFIED MULTIPLE
+//* ROUND TO NEAREST SPECIFIED MULTIPLE
 export const roundToMultiple = (num: number, multiple?: number) => {
   const m = multiple || 5;
   return Math.round(num / m) * m;
 }
 
-// RANDOM VALUE FROM BELL CURVE
+//* RANDOM VALUE FROM BELL CURVE
 export const randomBell = (
   multiplier?: number | boolean,
   min?: number,
@@ -57,7 +63,7 @@ export const randomBell = (
   skew=skew?skew:1;
 
   let u = 0, v = 0;
-  while(u === 0) u = Math.random() //Converting [0,1) to (0,1)
+  while(u === 0) u = Math.random() // Converting [0,1) to (0,1)
   while(v === 0) v = Math.random()
   let num = Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v )
   
@@ -72,7 +78,7 @@ export const randomBell = (
   return multiplier ? Math.floor(num*multiplier) : num;
 }
 
-// CLAMP NUMBER WITHIN SPECIFIED RANGE
+//* CLAMP NUMBER WITHIN SPECIFIED RANGE
 export const numberClamp = (num: number, min?: number, max?: number) => {
   // Example...
   //  numberClamp(123,50,100) || Output: 100
@@ -81,8 +87,8 @@ export const numberClamp = (num: number, min?: number, max?: number) => {
   return Math.min(Math.max(num, min), max);
 };
 
-// HANDLE EVEN/ODD VALUES
-//  ** Need to figure out handling non-whole number **
+//* HANDLE EVEN/ODD VALUES
+//?   Need to figure out handling non-whole number
 export const numberIsEven = (number: number) => {
   return number % 2 == 0 ? true : false;
 }
@@ -99,18 +105,31 @@ export const makeNumberOdd = (number: number) => {
   return number % 2 == 0 ? number+1 : number;
 }
 
+//* CHECK IF NUMBER IS A PRIME NUMBER
+export const isPrime = (number: number): boolean => {
+  if (number < 2) {
+    return false;
+  }
+  for (let i = 2; i < number; i++) {
+    if (number % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
 
-////////////////////////
-// ROUNDING FUNCTIONS //
-////////////////////////
 
-// PRECISION ROUNDING (Round things like "1.005")
+//! ====================== !//
+//! | ROUNDING FUNCTIONS | !//
+//! ====================== !//
+
+//* PRECISION ROUNDING (Round things like "1.005")
 export const precisionRound = (num: number) => {
   var m = Number((Math.abs(num) * 100).toPrecision(15));
   return Math.round(m) / 100 * Math.sign(num);
 }
 
-// GAUSSIAN ROUNDING (Round to the nearest even number)
+//* GAUSSIAN ROUNDING (Round to the nearest even number)
 export const gaussRound = (num: number, decimalPlaces?: number) => {
   var d = decimalPlaces || 0,
   m = Math.pow(10, d),
@@ -122,48 +141,141 @@ export const gaussRound = (num: number, decimalPlaces?: number) => {
   return d ? r / m : r;
 }
 
-// GET SUM OF VALUES IN AN ARRAY
-export const sum = (array: number[]) => {
-  let output = 0;
-  for(let i=0; i < array.length; i++) {
-    output += array[i]
+
+//! =========== !//
+//! | STRINGS | !//
+//! =========== !//
+
+//* ADD LEADING ZEROS TO NUMBER
+export const addZeros = (num?: number, pad?: number) => {
+  //? Add "0" to the beginning of a number and convert to string.
+  //? Default: "001"
+  num = num ? num : 1;
+  pad = pad ? pad : 3;
+  return num.toString().padStart(pad, '0');
+}
+
+//* PAD START/END OF STRING
+export const padString = (
+  str: string,
+  start?: {
+    amt?: number,
+    char?: string,
+  },
+  end?: {
+    amt?: number,
+    char?: string,
+  }) => {
+  // Pad start of string with given character
+  if(start.amt && start.char){
+    str = str.padStart(start.amt, start.char)
+  }
+  // Pad end of string with given character
+  if(end.amt && end.char){
+    str = str.padEnd(end.amt, end.char)
+  }
+  return str;
+}
+
+//* SPLIT STRING TO ARRAY
+//! Type 'string' can only be iterated through when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or higher.
+// export const splitString = (str: string) => {
+//   //? Outputs an array of each individual character
+//   return [...str];
+// }
+
+//* REVERSE STRING ORDER
+// export const reverseString = (str: string) => {
+//   //? Reverses character array and joins back to string
+//   return splitString(str).reverse().join('');
+// }
+
+//* LIMIT CHARACTERS IN A STRING
+interface LimitProps {
+  len: number,
+  string: string,
+}
+interface CharLimitProps extends LimitProps {
+  opts: {
+    completeWords: boolean,
+    ellipsis: boolean
+  }
+}
+export const charLimit = (props: CharLimitProps) => {
+  const {len, string, opts} = props;
+  // Trim string to chararcter limit
+  let trim = string.slice(0, len);
+
+  if(opts.completeWords === true) {
+    // If character is cut off in middle of word continue final word
+    trim = trim.slice(0, Math.min(trim.length, trim.lastIndexOf(" ")))
+  }
+  if(opts.ellipsis === true && len < string.length) {
+    trim = trim.endsWith('.') ? trim += '..' : trim += '...';
+  }
+  return trim;
+}
+
+//* LIMIT WORD COUNT IN STRING
+interface WordLimitProps extends LimitProps {
+  opts: {
+    ellipsis: boolean
+  }
+}
+export const wordLimit = (props: WordLimitProps) => {
+  const {len, string, opts} = props;
+  const split = string.trim().split(' ');
+  const arr = split.slice(0, len);
+  console.log(split.length)
+  let output = arr.join(' ');
+  if(opts.ellipsis && len < split.length) {
+    return output.endsWith('.') ? output += '..' : output += '...';
   }
   return output;
 }
 
-// GET AVERAGE OF VALUE
-export const avgerage = (array: number[]) => {
-  return sum(array) / array.length;
-};
-
-// GET RATIOS
-export const ratios = (array: number[]) => {
-  const total = sum(array);
-  const avg = (n: number) => (n / total) * 100;
-
-  let output = [];
-  for(let i=0; i < array.length; i++) {
-    output.push(avg(array[i]));
+//* CHECK FOR A SEARCH TERM IN A STRING
+export const stringSearch = (
+  stringToCheck: string,
+  searchTerm: string,
+  checks?: {
+    includes?: boolean,
+    startsWith?: boolean,
+    endsWith?: boolean,
   }
-  return output;
+) => {
+  let { includes, startsWith, endsWith } = checks;
+    includes = includes ? includes : false;
+    startsWith = startsWith ? startsWith : false;
+    endsWith = endsWith ? endsWith : false;
+
+  if(includes && stringToCheck.includes(searchTerm)) {
+    return true;
+  }
+  if(startsWith && stringToCheck.startsWith(searchTerm)) {
+    return true;
+  }
+  if(endsWith && stringToCheck.endsWith(searchTerm)) {
+    return true;
+  }
+  return false;
 }
 
-
-/////////////
-// STRINGS //
-/////////////
-
+//* CAPITALIZE FIRST LETTER ONLY
 export const capitalize = (string: string) => {
+  //? First letter is always caps and rest are lowercase
   const output = string.toLowerCase();
   return output.charAt(0).toUpperCase() + output.slice(1);
 }
 
+//* CAPITALIZE FIRST LETTER (Rest left as is)
 export const capitalizeWord = (string: string) => {
+  //? First letter is always caps and rest are left as is
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-// CAPITALIZE MULTIPLE WORDS IN A STRING OR ARRAY
-// Make Override List work
+//* CAPITALIZE MULTIPLE WORDS IN A STRING OR ARRAY
+//!   Get Override List to work
 export const capitalizeWords = (input: string, titleCase?: boolean, excludeWordsList?: string[], overrideList?: string[]) => {
 
   // Check string to see if there are multiple words in a string. Checks to see if there
@@ -217,13 +329,13 @@ export const capitalizeWords = (input: string, titleCase?: boolean, excludeWords
     return output !== false ? output : capitalizeWord(input);
 }
 
-// TITLE CASE
-// Capitalizes the first letter in the words of a string
+//* TITLE CASE
+//? Capitalizes the first letter in the words of a string
 export const titleCase = (input: string, excludeWordsList?: string[], overrideList?: string[]) => {
   return capitalizeWords(input, true, excludeWordsList, overrideList);
 }
 
-// REMOVE ACCENTS IN A WORD
+//* REMOVE ACCENTS IN A WORD
 export const removeWordAccents = (word: string) => {
   // Split accent from letters into 2 separate characters
   const splitAccent: string[] = Array.from( word.normalize( 'NFD' ) );
@@ -237,7 +349,7 @@ export const removeWordAccents = (word: string) => {
   return output;
 }
 
-// REMOVE ACCENTS IN A STRING -- Multiple words (follows same structure as 'capitalizeWords')
+//* REMOVE ALL ACCENTS IN A STRING -- Multiple words (follows same structure as 'capitalizeWords')
 export const removeAccents = (input: string) => {
   const checkForMultipleWords = input.trim().indexOf(' ') != -1;
   const splitString = input.split(" ");
@@ -272,11 +384,11 @@ export const unicodeToChar = (code: any) => {
 }
 
 
-///////////////////////
-// COMPARE & SHUFFLE //
-///////////////////////
+//! ===================== !//
+//! | COMPARE & SHUFFLE | !//
+//! ===================== !//
 
-// "THE COMPARE FUNCTION" -- Used in "ARRANGE NUMBERS" function 
+//* "THE COMPARE FUNCTION" -- Used in "ARRANGE NUMBERS" function 
 export const compare = (
   reverse?: 'random' | boolean,
   random?: boolean
@@ -288,13 +400,13 @@ export const compare = (
     return (a:any,b:any) => reverse === true ? b-a : a-b }
 }
 
-// GET AVERAGE OF NUMBERS IN AN ARRAY
+//* GET AVERAGE OF NUMBERS IN AN ARRAY
 export const average = (numberArray: number[]) => {
 	const avg = numberArray.reduce((a,b) => a+b);
 	return avg;
 }
 
-// COMPARE OBJECTS FOR PERCENT MATCH
+//* COMPARE OBJECTS FOR PERCENT MATCH
 export const compareObjects = (objA: object, objB: object) => {
 	// Get number of items in each object
 	const aLength = Object.keys(objA).length;
@@ -314,7 +426,7 @@ export const compareObjects = (objA: object, objB: object) => {
 };
 
 
-// MOST FREQUENTLY USED VALUE
+//* MOST FREQUENTLY USED VALUE
 export const mostFreqValue = (arr: any[]) => {
   // Find the most common value in an array
   // Ex.
@@ -327,8 +439,8 @@ export const mostFreqValue = (arr: any[]) => {
     ).pop();
 }
 
-// PERFECT NUMBER SHUFFLE (aka "Fisher Yates Shuffle")
-export const shuffle = (array:any[]) => {
+//* PERFECT SHUFFLE (aka "Fisher Yates Shuffle")
+export const shuffle = (array: any[]) => {
   for (let i = array.length -1; i > 0; i--) {
     let j = randomize(i);
     let k = array[i];
@@ -338,14 +450,14 @@ export const shuffle = (array:any[]) => {
   return array;
 }
 
-// SHUFFLE STRING ORDER
+//* SHUFFLE STRING ORDER
 export const shuffleStr = (str: string) => { // Randomizes character order of a string
   const arr = str.split('');
   const output = shuffleArr(arr).join('');
   return output;
 }
 
-// SHUFFLE ARRAY ORDER
+//* ANOTHER FUNCTION TO SHUFFLE ARRAY ORDER
 export const shuffleArr = (array: any[]) => {
   // Get number of indexes to replace
   let index = array.length;
@@ -361,7 +473,7 @@ export const shuffleArr = (array: any[]) => {
   return array;
 }
 
-// SHUFFLE LIKE DECK OF CARDS -- Split in half, Shuffle one at a time, Split again
+//* SHUFFLE LIKE DECK OF CARDS -- Split in half, Shuffle one at a time, Split again
 export const cardShuffle = (
   array: any[],
   setSplit?: number,
@@ -369,8 +481,7 @@ export const cardShuffle = (
   tarot?: boolean
 ) => {
   tarot = tarot === true ? true : false;
-  // console.log(tarot)
-  // First Split
+  //? First Split
   const split = splitArray(reverseArr(array), bellSplit?"bell":false, setSplit);
     // Reverses order of deck to keep output in same order since loop starts with the end
     // so that `pop()` can be used to remove each item. Still would be the same result if
@@ -381,7 +492,7 @@ export const cardShuffle = (
   let setA = split[0];
   let setB = split[1];
 
-  // Shuffle
+  //? Shuffle
   for(let i = len; i > 0; i--) { // Emulate odds of left vs. right side being shuffled in
     let sel = cointoss();
     if((sel && setA.length) || !setB.length) {
@@ -396,14 +507,14 @@ export const cardShuffle = (
     }
   }
   
-  // Second Split
+  //? Second Split
   const outputArr = splitArray(arr, bellSplit?"bell":false, setSplit);
   const output = outputArr[1].concat(outputArr[0]); // Combine sets
   
   return output;
 }
 
-// THE "SHUFFLE CARDS" FUNCTION -- w/ Rounds, Computer Shuffle, & Split options
+//* THE "SHUFFLE CARDS" FUNCTION -- w/ Rounds, Computer Shuffle, & Split options
 export const shuffleCards = (
   array: any[],
   rounds?: number,
@@ -413,11 +524,11 @@ export const shuffleCards = (
 ) => {
   tarot = tarot === true ? true : false;
 
-  // Using "bell" for split will give best approximation for a true "human middle-split"
+  //? Using "bell" for split will give best approximation for an automated middle-split
   //    -- tends to be close to middle within a range within a bell curve
-  // Using a number will be split at an exact point for every shuffle
+  //? Using a number will be split at an exact point for every shuffle
   //    -- minimum is 1, maximum is 1 less than the array length
-  // No split will split in the middle or, when odd, setA will be weighted with more
+  //? No split will split in the middle or, when odd, setA will be weighted with more
 
   const bellSplit = split === "bell" || split === true ? true : false;
   const setSplit = !bellSplit && typeof split === 'number' && !Number.isNaN(split)
@@ -445,11 +556,11 @@ export const shuffleCards = (
 
 
 
-/////////////////////
-// SORT & ORGANIZE //
-/////////////////////
+//! =================== !//
+//! | SORT & ORGANIZE | !//
+//! =================== !//
 
-// ARRANGE NUMBERS (Organize numbers in order lowest to highest or highest to lowest)
+//* ARRANGE NUMBERS (Organize numbers in order lowest to highest or highest to lowest)
 export const arrangeNumbers = (
   numArr: number[],
   reverse?: boolean,
@@ -458,7 +569,7 @@ export const arrangeNumbers = (
   return numArr.sort(compare(reverse, random));
 }
 
-// SIMPLE MAP FUNCTION (From an array of items)
+//* SIMPLE MAP FUNCTION (From an array of items)
 export const simpleMap = (
   items: any[],
   classes?: string,
@@ -475,7 +586,7 @@ export const simpleMap = (
   </>)
 }
 
-// USE AN ARRAY OF OBJECTS TO RETURN ELEMENTS WITH UNIQUE TAGS AND/OR CLASSES IN MAP FUNCTION
+//* USE AN ARRAY OF OBJECTS TO RETURN ELEMENTS WITH UNIQUE TAGS AND/OR CLASSES IN MAP FUNCTION
 export const complexMap = (
   itemsArray: {
     tag: string,
@@ -490,7 +601,7 @@ export const complexMap = (
   </>)
 }
 
-// REVERSE ORDER OF AN ARRAY
+//* REVERSE ORDER OF AN ARRAY
 export const reverseArr = (input: any[]) => {
   var output = new Array;
   if(input){
@@ -501,7 +612,7 @@ export const reverseArr = (input: any[]) => {
   return output;
 }
 
-// REMOVE ITEMS FROM AN ARRAY
+//* REMOVE ITEMS FROM AN ARRAY
 export const removeFromArray = (array: any[], removeItems) => {
   return array.filter(value => !removeItems.includes(value));
 }
@@ -511,22 +622,22 @@ export const merge = (
 ) => objects.reduce((acc, cur) => ({ ...acc, ...cur }));
 
 
-//////////////////////////
-// SPLIT & SELECT ARRAY //
-//////////////////////////
+//! ======================== !//
+//! | SPLIT & SELECT ARRAY | !//
+//! ======================== !//
 
-// SPLIT ARRAY INTO TWO SEPARATE ARRAYS -- Weighted on FIRST half
+//* SPLIT ARRAY INTO TWO SEPARATE ARRAYS -- Weighted on FIRST half
 
-// This was initially made just to output an array with two halves whether it is even or odd, but
-// now it does much more! You can choose the half split, there's a "human" split which splits it
-// randomly on a bell curve somewhere around the middle, you can set 'randomSplit' to true and it
-// it chooses a number halfway between 0 and the halfway point to be added or subtracted to the
-// 'half' value, or choose an exaxt point to split.
+//? This was initially made just to output an array with two halves whether it is even or odd, but
+//? now it does much more! You can choose the half split, there's a "human" split which splits it
+//? randomly on a bell curve somewhere around the middle, you can set 'randomSplit' to true and it
+//? it chooses a number halfway between 0 and the halfway point to be added or subtracted to the
+//? 'half' value, or choose an exaxt point to split.
 
-// If only 'list' is entered this will just split the array in half as was initially intended. You
-// can also add padding to ensure the length of each array is not less than a specified value to
-// make sure the set split is within a specified range, especially useful when that value and/or the
-// halfway point is unknown.
+//? If only 'list' is entered this will just split the array in half as was initially intended. You
+//? can also add padding to ensure the length of each array is not less than a specified value to
+//? make sure the set split is within a specified range, especially useful when that value and/or the
+//? halfway point is unknown.
 
 export const splitArray = (
   list: any[],
@@ -557,13 +668,14 @@ export const splitArray = (
   return outputObj === true ? { a: a, b: b } : [ a, b ];
 }
 
-// RETURN ONE ITEM (or set/object) FROM AN ARRAY or ARRAY OF ARRAYS
+//* RETURN ONE ITEM (or set/object) FROM AN ARRAY or ARRAY OF ARRAYS
 export const select = (el: string | any[]) => {
   const output = el[randomize(el.length)];
   return output[randomize(output.length)] ? output[randomize(output.length)] : el[randomize(el.length)];
 };
 
-// GET MULTIPLE RANDOM ITEMS FROM AN ARRAY OF ARRAYS
+//* GET MULTIPLE RANDOM ITEMS FROM AN ARRAY OF ARRAYS
+//!   Needs to work with objects as well 
 export const randomSelection = (
   arraySet: any[],
   selectIndexesArray?: number[]
@@ -585,22 +697,22 @@ export const randomSelection = (
   return output[randomize(output.length)];
 }
 
-// RETURN A SINGLE ELEMENT OR SET FROM AN ARRAY OF ARRAYS
+//* RETURN A SINGLE ELEMENT OR SET FROM AN ARRAY OF ARRAYS
 
-  // "arraySet" is the array of arrays being sorted
+//? "arraySet" is the array of arrays being sorted
 
-  // "outputArray" is boolean
-  //    true = output entire array set (default)
-  //    false = output one element from array set... just like `select(el)` function above ^^^
+//? "outputArray" is boolean
+//?    true = output entire array set (default)
+//?    false = output one element from array set... just like `select(el)` function above ^^^
 
-  // "arraySelect" is an array conatining indexes of array sets to be considered
-  //    use to include only specific array sets from the array of arrays ("arraySet")
+//? "arraySelect" is an array conatining indexes of array sets to be considered
+//?    use to include only specific array sets from the array of arrays ("arraySet")
 
-  //   CHOOSE ONE ARRAY SET FROM AN ARRAY OF ARRAYS
-  //   Example (selecting only indexes 0 and 2 from array):
-  //     const arr = [["1a","2a"],["1b"],["1c","2c","3c"],["4b","4c"]]
-  //     arrayEl(arr, true, [0,2])
-  //     OUTPUT -- ["1c","2c","3c"] -- Selected 'arr[2]' from indexes 0 and 2
+//?   CHOOSE ONE ARRAY SET FROM AN ARRAY OF ARRAYS
+//?   Example (selecting only indexes 0 and 2 from array):
+//?     const arr = [["1a","2a"],["1b"],["1c","2c","3c"],["4b","4c"]]
+//?     arrayEl(arr, true, [0,2])
+//?     OUTPUT -- ["1c","2c","3c"] -- Selected 'arr[2]' from indexes 0 and 2
 
 export const arrayEl = (
   arraySet: any[],
@@ -619,62 +731,58 @@ export const arrayEl = (
 export function copyArrayData(src: any[], dest: any[]) {
   // Determine the number of significant bytes in the source array
   var sigBytes = src.filter(function(byte) { return byte !== null; }).length;
-
   // Copy the data from the source array to the destination array
   for (var i = 0; i < sigBytes; i++) {
     dest[i] = src[i];
   }
-
   // Return the destination array
   return dest;
 }
 
 
 
-///////////////
-// ITERATION //
-///////////////
+//! ============= !//
+//! | ITERATION | !//
+//! ============= !//
 
-// REPEAT ACTIONS
-
-// Ex.
-//  let labels = [];
-//  repeater(3, i => { labels.push(`Unit ${i + 1}`})
-//  console.log(labels) ==>> ['Unit 1', 'Unit 2', 'Unit 3']
-
+//* REPEAT ACTIONS
+//? Ex.
+//?  let labels = [];
+//?  repeater(3, i => { labels.push(`Unit ${i + 1}`})
+//?  console.log(labels) ==>> ['Unit 1', 'Unit 2', 'Unit 3']
 export const repeater = (n: number, action: (i: any) => any) => {
   for(let i = 0; i < n; i++) {
     action(i);
   }
 }
 
-//  OBJECT MAP
+//*  OBJECT MAP
 export const objMap = (object: object, mapFn: (item: any, index: any) => any) => {
   Object.keys(object).forEach(
     (item, index) => { return mapFn(item, index) })
 }
 
-// More Object Iteration...
-// https://medium.com/sanjagh/iterating-over-javascript-objects-declaratively-or-how-to-map-filter-and-reduce-on-objects-d179cd40d935
+//* More Object Iteration...
+//! https://medium.com/sanjagh/iterating-over-javascript-objects-declaratively-or-how-to-map-filter-and-reduce-on-objects-d179cd40d935
 
-// const fruits = {
-//   apple: { qty: 300, color: "green", name: "apple", price: 2 },
-//   banana: { qty: 130, color: "yellow", name: "banana", price: 3 },
-//   orange: { qty: 120, color: "orange", name: "orange", price: 1.5 },
-//   melon: { qty: 70,  color: "yellow", name: "melon", price: 5 }
-// };
+//? const fruits = {
+//?   apple: { qty: 300, color: "green", name: "apple", price: 2 },
+//?   banana: { qty: 130, color: "yellow", name: "banana", price: 3 },
+//?   orange: { qty: 120, color: "orange", name: "orange", price: 1.5 },
+//?   melon: { qty: 70,  color: "yellow", name: "melon", price: 5 }
+//? };
 
-// TURN OBJECT INTO ARRAY OF OBJECTS
+//* TURN OBJECT INTO ARRAY OF OBJECTS
 export const reduceBy = (
   obj: object,
   func: (prev: any, key: any, value: any) => any,
   initialValue?: any
 ) => {
-// const myFruits = reduceBy(fruits, (prev, _, fruit) => [...prev, fruit], []);
-//    [ { qty: 300, color: 'green', name: 'apple', price: 2 },
-//      { qty: 130, color: 'yellow', name: 'banana', price: 3 },
-//      { qty: 120, color: 'orange', name: 'orange', price: 1.5 },
-//      { qty: 70, color: 'yellow', name: 'melon', price: 5 } ]
+//? const myFruits = reduceBy(fruits, (prev, _, fruit) => [...prev, fruit], []);
+//?    [ { qty: 300, color: 'green', name: 'apple', price: 2 },
+//?      { qty: 130, color: 'yellow', name: 'banana', price: 3 },
+//?      { qty: 120, color: 'orange', name: 'orange', price: 1.5 },
+//?      { qty: 70, color: 'yellow', name: 'melon', price: 5 } ]
   func = func ? func : (prev, _, item) => [...prev, item];
   return Object.entries(obj).reduce(
     (prev, [key, value]) => func(prev, key, value),
@@ -683,17 +791,17 @@ export const reduceBy = (
 }
 
 
-// GROUP AN ARRAY OF OBJECTS BY KEY
+//* GROUP AN ARRAY OF OBJECTS BY KEY
 export const groupBy = (obj: object[], key: string) => {
-// Example:
-//   const arr = [ {id: 1, name: 'Alice', group: 'A'}, {id: 2, name: 'Bob', group: 'B'},
-//                 {id: 3, name: 'Charlie', group: 'A'}, {id: 4, name: 'Dave', group: 'B'}, ];
-//
-//  groupBy(arr, 'group');
-//
-// Output:
-//  { A: [id: 1, name: 'Alice', group: 'A'},{...}],
-//    B: [{...}, {...},], }
+//? Example:
+//?   const arr = [ {id: 1, name: 'Alice', group: 'A'}, {id: 2, name: 'Bob', group: 'B'},
+//?                 {id: 3, name: 'Charlie', group: 'A'}, {id: 4, name: 'Dave', group: 'B'}, ];
+//?
+//?  groupBy(arr, 'group');
+//?
+//? Output:
+//?  { A: [id: 1, name: 'Alice', group: 'A'},{...}],
+//?    B: [{...}, {...},], }
   return obj.reduce((acc, curr) => {
     const keyVal = curr[key];
     if (!acc[keyVal]) {
@@ -705,15 +813,66 @@ export const groupBy = (obj: object[], key: string) => {
 };
 
 
-// GENERATE SOME GOOD OL LOREM IPSUM
+//* GENERATE SOME GOOD OL' LOREM IPSUM
 export const lorem = () => {
-  const ipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna
-                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit
-                esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.`
-  return (ipsum)
+  const ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "+
+                "sed do eiusmod tempor incididunt ut labore et dolore magna "+
+                "aliqua. Ut enim ad minim veniam, quis nostrud exercitation "+
+                "ullamco laboris nisi ut aliquip ex ea commodo consequat. "+
+                "Duis aute irure dolor in reprehenderit in voluptate velit"+
+                "esse cillum dolore eu fugiat nulla pariatur. Excepteur sint "+
+                "occaecat cupidatat non proident, sunt in culpa qui officia "+
+                "deserunt mollit anim id est laborum."
+  return ipsum
+}
+
+// RETURN AN EMPTY IMAGE
+export const emptyImg = (
+  outputObject: {
+    height?: number | boolean,
+    width?: number | boolean,
+  } = undefined,
+  outputImage: {
+    classes?: string | boolean,
+    styles?: object,
+  } = undefined
+) => {
+// outputObject = { height: 1000, width: 1000 } - or - boolean
+// outputImage = {classes: 'image-classes', styles: { style1: value1, style2: value2 }}
+
+  // Returns an empty 1x1 px Data PNG
+  const url = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+  
+  const img = {
+    classes: outputImage && outputImage.classes !== true
+        ? outputImage.classes
+      : outputImage.classes === true 
+        ? 'empty-image'
+        : '',
+    styles: outputImage.styles
+        ? outputImage.styles
+        : null,
+  }
+
+  
+  const autosize = imageSizeObj(outputObject, true)
+  const height = autosize.height;
+  const width = autosize.width;
+
+  // const height = (checkType(outputObject.height, 'number') && checkType(outputObject.width, 'number')) || outputObject.height !== true
+  //     ? outputObject.height
+  //   : checkType(outputObject.width, 'number') && outputObject.height === undefined
+  //     ? outputObject.width
+  //     : 1000;
+  // const width = (checkType(outputObject.width, 'number') && checkType(outputObject.height, 'number')) || outputObject.width !== true
+  //     ? outputObject.width
+  //   : checkType(outputObject.height, 'number') && outputObject.width === undefined
+  //     ? outputObject.height
+  //     : 1000;
+
+          // If 'classes' or 'styles' are defined and no 'height'/'width' set, output will be an 'img' element
+  return (  outputImage && !outputObject ? <img className={img.classes.toString()} style={img.styles} src={url} />
+          // If 'height' and/or 'width' are defined and no 'classes'/'styles' set, output will be an Image object
+          : outputObject && !outputImage ? { src: url, blurDataUrl: url, height: height, width: width }
+          : url )
 }

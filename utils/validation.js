@@ -1,5 +1,6 @@
 import slugify from 'sluga';
 import isObject from 'isobject';
+import { hexIsValid, hslIsValid, rgbIsValid } from '../lib/colorize/colorValidation';
 
 // CHECK ELEMENT TYPES
 // Uses various methods to check if the given 'element' matches a 'type' (string)
@@ -74,6 +75,21 @@ export const checkTypeof = (variable, type) => {
       && typeof variable.nodeName==="string"
 
       ? output = {is: true, type: "node"}
+
+    // RGB = TRUE
+    : type && type === "rbg" && rgbIsValid(variable)
+
+      ? output = {is: true, type: "rbg"}
+
+    // HEX = TRUE
+    : type && type === "hex" && hexIsValid(variable)
+
+      ? output = {is: true, type: "hex"}
+
+    // HSL = TRUE
+    : type && type === "hsl" && hslIsValid(variable)
+
+      ? output = {is: true, type: "hsl"}
 
     // NULL = TRUE
     : type && type === "null" && variable === null
@@ -168,14 +184,8 @@ export const checkType = (variable, type) => {
   if(type === 'a' || type === 'arr' || type === '[]') {
     type = 'array'
   }
-  if(type === 'multiarr' || type === 'arrs' || type === '[[]]') {
+  if(type === 'multiarr' || 'multiarray' || type === 'arrs' || type === '[[]]') {
     type = 'arrays'
-  }
-  if(type === 'big') {
-    type = 'bigint'
-  }
-  if(type === 'd') {
-    type = 'date'
   }
   if(type === 'f' || type === 'fun' || type === 'func') {
     type = 'function'
@@ -185,6 +195,12 @@ export const checkType = (variable, type) => {
   }
   if(type === 'n' || type === 'num') {
     type = 'number'
+  }
+  if(type === 'big') {
+    type = 'bigint'
+  }
+  if(type === 'd') {
+    type = 'date'
   }
   if(type === 'p' || type === 'percent' || type === '%') {
     type = 'percentage'
@@ -310,7 +326,17 @@ export const validateEmail = (email) => {
 }
 
 // VALIDATE PASSWORDS
-export const validatePassword = (password, reEnterPassword, passwordMatch, complexPassword, specialCharacters, min, max, consecutiveLimit) => {
+export const validatePassword = (
+  password,
+  reEnterPassword,
+  passwordMatch,
+  complexPassword,
+  specialCharacters,
+  min,
+  max,
+  consecutiveLimit,
+
+) => {
   
   // Ensure password is a string
   password = password.toString();
@@ -333,8 +359,7 @@ export const validatePassword = (password, reEnterPassword, passwordMatch, compl
   // 6 to 20 characters with at least one numeric digit, one uppercase an one lowercase letter
   const pwFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
   // Special characters
-  // !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
-  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"|,.<>?\/\\~]/;
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
   
   let errors = [];
   let successMessage = "Password is valid!";
@@ -407,7 +432,9 @@ export const validatePassword = (password, reEnterPassword, passwordMatch, compl
   // Handle errors
   if (errors.length) {
     return { is: false, pw: undefined, msg: errors }
-  } else {
+  }
+  // Handle pass
+  else {
     return { is: true, pw: password.toString(), msg: successMessage }
   }
 }
@@ -517,9 +544,57 @@ export const unFileName = (string, caps) => {
         ? titleCase(string)
       : caps === true
         ? capitalizeWords(string)
-        : string;
+        : string;adsvdvz 
   }
   return undefined;
+}
+
+
+// MULTIPLE CHECKS USING THE ARRAY METHOD, 'EVERY'
+//  Simple code that checks if a target variable is equal to Multiplee Values
+export const multiCheck = (valuesToCheck, targetVariable, checkToPerfrom) => {
+  if(checkType(valuesToCheck,'array') && valuesToCheck.length <= 1) {
+    console.warn(`Please include more than one value to check. (Value: ${valuesToCheck})`);
+  }
+  if(!checkType(valuesToCheck,'array') && checkType(valuesToCheck,'string')) {
+    valuesToCheck = valuesToCheck.indexOf(" ") != -1 ? valuesToCheck.split(' ') : [valuesToCheck];
+    console.warn(`Values should be in an array... value(s) being used: ${valuesToCheck}`);
+  }
+
+  const isEqual = valuesToCheck.every(value => {
+    return value === targetVariable
+  });
+
+  const isThreshold = valuesToCheck.every(value => {
+    return checkToPerfrom === '>'
+        ? value > targetVariable
+      : checkToPerfrom === '>='
+        ? value >= targetVariable
+      : checkToPerfrom === '<'
+        ? value < targetVariable
+        : value <= targetVariable
+  });
+
+  const isSubset = valuesToCheck.every(value => {
+    return targetVariable.includes(value)
+  });
+
+  const includes = valuesToCheck.includes(targetVariable);
+
+  switch(checkToPerfrom) {
+    case '=':
+    case 'equal':
+      return isEqual;
+    case '<':
+    case '<=':
+    case '>':
+    case '>=':
+      return isThreshold;
+    case 'subset':
+      return isSubset;
+    case 'includes':
+      return includes;
+  }
 }
 
 
@@ -564,7 +639,7 @@ export const listOfWords = (type) => {
 
 
 // IMPORT NEXT IMAGE OR SIZE TO CREATE PROPER WIDTH/HEIGHT OBJECTS
-export const imageSizeObj = ( obj ) => {
+export const imageSizeObj = ( obj, autosize ) => {
 
   // Must be a Next image object, array of sizes, number, or string
   // Array -- [width, height] -- both must be numbers or strings
@@ -574,6 +649,16 @@ export const imageSizeObj = ( obj ) => {
 
 
   // Perform checks...
+
+  if (((!obj.width && !obj.height)
+    || (obj.width === true && (obj.height === true || !obj.height))
+    || (obj.height === true && (obj.width === true || !obj.width))) && autosize === true) {
+    sizeObj = { width: 1000, height: 1000 };
+  } else if (checkType(obj.height, 'number') && obj.width === undefined && autosize === true) {
+    sizeObj = { width: obj.height, height: obj.height };
+  } else if (checkType(obj.width, 'number') && obj.height === undefined && autosize === true) {
+    sizeObj = { width: obj.width, height: obj.width };
+  }
 
   if (obj.width && obj.height) {
 
@@ -617,9 +702,16 @@ export const imageSizeObj = ( obj ) => {
 
   } else {
     
-    return false;
+    return undefined;
     
   }
   
   return sizeObj;
+}
+
+// CHECK IF IMAGE EXISTS
+export const imageExists = (src) => {
+  const fetch = async () => axios.get(src).then(res => res.data);
+  const { data, error } = useSWR(src, fetch);
+  return data || !error ? true : error || !data ? false : undefined;
 }
