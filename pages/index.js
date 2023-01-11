@@ -107,6 +107,22 @@ export default function Home() {
       content: handleTxt(ourNursery, false),
     }
   }
+
+  const About = () => {
+    const data = content.about;
+
+    const heading = <><h1>{data.title}</h1><h2>{data.subtitle}</h2></>
+
+    return (
+      <section className={styles.about} id="about">
+        <hgroup>
+          {heading}
+        </hgroup>
+        <div className={styles.content}>
+          {data.content}
+        </div>
+      </section>)
+  }
   
   const Services = () => {
     const data = content.services;
